@@ -11,10 +11,8 @@ const ping = async () => {
 
 const login = async (creds: UserLoginCreds) => {
   const res = await axios.post<UserWithToken>(baseUrl, creds);
-  if (res.data.token) {
-    localStorage.setItem("user", res.data.token);
-    authHeaderService.setToken(res.data.token);
-  }
+  localStorage.setItem("user", res.data.token);
+  authHeaderService.setToken(res.data.token);
   return res.data;
 };
 

@@ -1,37 +1,39 @@
 import { Form, Formik } from "formik";
 import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 
 import { StateContext } from "../../state/state";
 import { setUser } from "../../state/reducer";
 import loginService from "../../services/loginService";
 import { UserLoginCreds } from "../../types";
-import { MySelect, MyTextField, SelectOption } from "../FormFields";
+import { MyTextField } from "../FormFields";
+import useAlertNotification from "../AlertNotification/useAlertNotification";
+import AlertNotification from "../AlertNotification/AlertNotification";
+import { formatErrorAsString } from "../../services/helpersService";
+import "./Login.css";
 
 const Login = () => {
-  const [state, dispatch] = useContext(StateContext);
+  const [, dispatch] = useContext(StateContext);
+  const { setErrorMsg, ...notif } = useAlertNotification();
+  const navigate = useNavigate();
 
   const handleLogin = async (values: UserLoginCreds) => {
     try {
       const userWithToken = await loginService.login(values);
       dispatch(setUser(userWithToken));
+      navigate("/");
     } catch (error) {
-      console.error(error);
+      setErrorMsg(formatErrorAsString(error));
     }
   };
 
-  const selectOptions: SelectOption[] = [
-    { value: 0, label: "zero" },
-    { value: 1, label: "one" },
-    { value: 2, label: "two" },
-  ];
-
   return (
-    <div>
+    <div className="login-container">
       <h1>Login</h1>
-      <div>{state.user?.username}</div>
+      <AlertNotification {...notif}></AlertNotification>
       <Formik
-        initialValues={{ username: "", password: "", test: [] }}
+        initialValues={{ username: "", password: "" }}
         validate={(values) => {
           const errors: { [field: string]: string } = {};
           if (!values.username) {
@@ -42,35 +44,43 @@ const Login = () => {
             errors.password = "Required";
           }
 
-          if (values.test.length === 0) {
-            errors.test = "Required";
-          }
           return errors;
         }}
         onSubmit={handleLogin}
       >
         {({ isValid, dirty, isSubmitting }) => (
           <Form>
-            <MyTextField name="username" type="text" label="Username" />
-            <MyTextField name="password" type="password" label="Password" />
-            <MySelect
-              name="test"
-              label="Select slots"
-              options={selectOptions}
-            ></MySelect>
-            <div>
+            <MyTextField
+              id="login-username-input"
+              name="username"
+              type="text"
+              label="Username"
+              required={true}
+            />
+            <MyTextField
+              id="login-password-input"
+              name="password"
+              type="password"
+              label="Password"
+              required={true}
+            />
+            <div className="login-btn-container">
               <Button
+                fullWidth
                 color="primary"
-                variant="contained"
+                variant="outlined"
                 type="submit"
                 disabled={!dirty || !isValid || isSubmitting}
               >
-                Submit
+                Log in
               </Button>
             </div>
           </Form>
         )}
       </Formik>
+      <div>
+        No account? <Link to="/signup">Sign Up</Link>
+      </div>
     </div>
   );
 };

@@ -1,0 +1,9 @@
+.signup-container {
+  margin: 0 auto;
+  max-width: 350px;
+}
+
+.to-login-msg {
+  margin-bottom: 15px;
+  text-align: center;
+}
