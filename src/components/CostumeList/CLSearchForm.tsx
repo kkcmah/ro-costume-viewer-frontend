@@ -1,37 +1,49 @@
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import { Form, Formik } from "formik";
+import { EquipSlot } from "../../types";
 import { MySelect, MyTextField, SelectOption } from "../FormFields";
+import "./CLSearchForm.css";
 
-// interface CLSearchFormProps {
-//     handleSearch: () => void
-// }
+export interface CLSearchValues {
+  itemId: string;
+  name: string;
+  equipSlots: string[];
+}
 
-const CLSearchForm = () => {
-  const selectOptions: SelectOption[] = [
-    { value: 0, label: "zero" },
-    { value: 1, label: "one" },
-    { value: 2, label: "two" },
-  ];
+interface CLSearchFormProps {
+  handleSearch: (formValues: CLSearchValues) => void;
+  handleReset: () => void;
+  initialValues: CLSearchValues;
+  loading: boolean;
+}
 
-  const handleSearch = () => {
-    console.log("searching...");
-  };
+const CLSearchForm = ({
+  handleSearch,
+  handleReset,
+  initialValues,
+  loading,
+}: CLSearchFormProps) => {
+  const selectOptions: SelectOption[] = Object.values(EquipSlot).map((slot) => {
+    return { value: slot, label: slot };
+  });
 
   return (
-    <div className="cl-search-form" style={{ marginTop: "2em" }}>
+    <div className="cl-search-form">
       <Formik
-        initialValues={{ itemId: "", name: "", equipSlots: [] }}
+        enableReinitialize
+        initialValues={initialValues}
         validate={(values) => {
           const errors: { [field: string]: string } = {};
           if (isNaN(+values.itemId)) {
             errors.itemId = "Please input a number or leave empty";
           }
-          if (values.equipSlots.length === 0) {
-            errors.equipSlots = "Required";
-          }
+
           return errors;
         }}
-        onSubmit={handleSearch}
+        onSubmit={(values, { setSubmitting }) => {
+          handleSearch(values);
+          setSubmitting(false);
+        }}
       >
         {({ isValid, isSubmitting }) => (
           <Form>
@@ -56,12 +68,16 @@ const CLSearchForm = () => {
             ></MySelect>
             <div>
               <Button
+                id="search-btn"
                 color="primary"
                 variant="outlined"
                 type="submit"
-                disabled={!isValid || isSubmitting}
+                disabled={!isValid || isSubmitting || loading}
               >
                 Search
+              </Button>
+              <Button color="primary" variant="outlined" onClick={handleReset}>
+                Reset
               </Button>
             </div>
           </Form>

@@ -1,12 +1,12 @@
 import Alert from "@mui/material/Alert";
 
-interface NotificationProps {
+interface AlertNotificationProps {
   msg: string;
   isErr: boolean;
   closeNotif: () => void;
 }
 
-const Notification = ({ msg, isErr, closeNotif }: NotificationProps) => {
+const AlertNotification = ({ msg, isErr, closeNotif }: AlertNotificationProps) => {
   if (!msg) return null;
   return (
     <Alert
@@ -21,4 +21,4 @@ const Notification = ({ msg, isErr, closeNotif }: NotificationProps) => {
   );
 };
 
-export default Notification;
+export default AlertNotification;
