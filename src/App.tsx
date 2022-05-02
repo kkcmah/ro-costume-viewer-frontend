@@ -12,6 +12,7 @@ import { setUser } from "./state/reducer";
 import SignUp from "./components/SignUp/SignUp";
 import Logout from "./components/Logout/Logout";
 import { Navigate } from "react-router-dom";
+import NoMatchPage from "./components/NoMatchPage/NoMatchPage";
 
 const App = () => {
   const [state, dispatch] = useContext(StateContext);
@@ -58,6 +59,7 @@ const App = () => {
                 state.user ? <Navigate to="/"></Navigate> : <Logout></Logout>
               }
             ></Route>
+            <Route path="/*" element={<NoMatchPage />} />
           </Routes>
         </Container>
       </Router>
