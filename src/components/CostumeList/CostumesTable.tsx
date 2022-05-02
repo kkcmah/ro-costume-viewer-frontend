@@ -1,3 +1,7 @@
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -6,8 +10,17 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Costume } from "../../types";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useContext, useState } from "react";
+import CostumePreviewDialog from "./CostumePreviewDialog";
+import { StateContext } from "../../state/state";
+import { setFavCostumes } from "../../state/reducer";
+import costumesService from "../../services/costumesService";
+import AlertNotification from "../AlertNotification/AlertNotification";
+import { formatErrorAsString } from "../../services/helpersService";
+import useAlertNotification from "../AlertNotification/useAlertNotification";
+import "../../spritesheet/spritesheet.css";
 
 interface CostumesTableProps {
   costumes: Costume[];
@@ -28,6 +41,35 @@ const CostumesTable = ({
   count,
   rowsPerPageOptions,
 }: CostumesTableProps) => {
+  const [previewOpen, setPreviewOpen] = useState<boolean>(false);
+  const [curCosPreview, setCurCosPreview] = useState<Costume>();
+  const { setErrorMsg, ...notif } = useAlertNotification();
+  const [state, dispatch] = useContext(StateContext);
+
+  const openPreview = (costume: Costume) => {
+    setCurCosPreview(costume);
+    setPreviewOpen(true);
+  };
+
+  const closePreview = () => {
+    setPreviewOpen(false);
+  };
+
+  const toggleFavCostume = async (costumeId: string) => {
+    if (!state.user) return;
+    try {
+      if (state.user.favCostumes.includes(costumeId)) {
+        const favCostumes = await costumesService.unfavorite(costumeId);
+        dispatch(setFavCostumes(favCostumes));
+      } else {
+        const favCostumes = await costumesService.favorite(costumeId);
+        dispatch(setFavCostumes(favCostumes));
+      }
+    } catch (error) {
+      setErrorMsg(formatErrorAsString(error));
+    }
+  };
+
   const handleChangePage = (event: unknown, newPage: number) => {
     onPageChange(newPage);
   };
@@ -42,6 +84,7 @@ const CostumesTable = ({
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
+      <AlertNotification {...notif}></AlertNotification>
       <TableContainer>
         <Table aria-label="costumes table">
           <TableHead>
@@ -56,10 +99,69 @@ const CostumesTable = ({
             {costumes.map((cos) => {
               return (
                 <TableRow hover key={cos.id}>
-                  <TableCell>{cos.name}</TableCell>
+                  <TableCell>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <Box mr={1} className="costume costume-18740"></Box>
+                      <div>{cos.name}</div>
+                      {cos.previewUrl && (
+                        <>
+                          <Box
+                            sx={{
+                              display: { xs: "none", md: "inline" },
+                            }}
+                          >
+                            <Button
+                              size="small"
+                              color="primary"
+                              variant="outlined"
+                              onClick={() => openPreview(cos)}
+                            >
+                              Preview
+                            </Button>
+                          </Box>
+                          <Box
+                            sx={{
+                              display: { xs: "inline", md: "none" },
+                            }}
+                          >
+                            <IconButton
+                              color="primary"
+                              aria-label="show preview"
+                              onClick={() => openPreview(cos)}
+                            >
+                              <VisibilityIcon />
+                            </IconButton>
+                          </Box>
+                        </>
+                      )}
+                    </Box>
+                  </TableCell>
                   <TableCell>{cos.itemId}</TableCell>
                   <TableCell>{cos.equipSlots}</TableCell>
-                  <TableCell>{cos.costumeTags}</TableCell>
+                  <TableCell>
+                    {cos.costumeTags.map((tag) => tag.name).join(" ")}
+                  </TableCell>
+                  {state.user && (
+                    <TableCell>
+                      <IconButton
+                        color={
+                          state.user.favCostumes.includes(cos.id)
+                            ? "error"
+                            : "default"
+                        }
+                        aria-label="toggle favorite"
+                        onClick={() => void toggleFavCostume(cos.id)}
+                      >
+                        <FavoriteIcon />
+                      </IconButton>
+                    </TableCell>
+                  )}
                 </TableRow>
               );
             })}
@@ -75,6 +177,11 @@ const CostumesTable = ({
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+      <CostumePreviewDialog
+        previewOpen={previewOpen}
+        closePreview={closePreview}
+        curCosPreview={curCosPreview}
+      ></CostumePreviewDialog>
     </Paper>
   );
 };
