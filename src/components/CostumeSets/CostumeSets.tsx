@@ -12,7 +12,7 @@ import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
 import costumeSetsService from "../../services/costumeSetsService";
 import { formatErrorAsString } from "../../services/helpersService";
-import { CostumeSet } from "../../types";
+import { CostumeSet, CostumeSetsPagedParams } from "../../types";
 import AlertNotification from "../AlertNotification/AlertNotification";
 import useAlertNotification from "../AlertNotification/useAlertNotification";
 import CSSearchForm from "./CSSearchForm";
@@ -28,18 +28,28 @@ const CostumeSets = () => {
   const [count, setCount] = useState<number>(-1);
 
   const [name, setName] = useState("");
+  const [prevSearchName, setPrevSearchName] = useState("");
 
   useEffect(() => {
     void getCostumeSets();
   }, []);
 
-  const getCostumeSets = async (name = "") => {
+  const getCostumeSets = async (
+    params: CostumeSetsPagedParams = {},
+    isLoadMore = false
+  ) => {
     try {
       setLoading(true);
-      const response = await costumeSetsService.getAll(name);
-      console.log(response);
-      setCostumeSets((prev) => [...prev, ...response]);
-      setCount(5);
+      const response = await costumeSetsService.getAll(params);
+      console.log(response, isLoadMore);
+      setCount(20);
+      setCostumeSets((prev) => [...prev, ...response.costumeSets]);
+      // if (isLoadMore) {
+      //   setCostumeSets((prev) => [...prev, ...response.costumeSets]);
+      // } else {
+      //   setCostumeSets(response.costumeSets);
+      //   setCount(response.count);
+      // }
     } catch (error) {
       setErrorMsg(formatErrorAsString(error));
     } finally {
@@ -53,8 +63,22 @@ const CostumeSets = () => {
 
   const handleSearch = (event: SyntheticEvent) => {
     event.preventDefault();
-    console.log("Search", name);
-    void getCostumeSets();
+    const params: CostumeSetsPagedParams = {
+      name,
+    };
+    setPrevSearchName(name);
+    void getCostumeSets(params);
+  };
+
+  const handleLoadMore = () => {
+    const params: CostumeSetsPagedParams = {
+      lastSeenIds: costumeSets.map((cs) => cs.id),
+      name: prevSearchName,
+    };
+    if (costumeSets.length > 0) {
+      params.lastLikeValue = costumeSets[costumeSets.length - 1].likes;
+    }
+    void getCostumeSets(params, true);
   };
 
   const updateLikeSetState = (costumeSetId: string, like: boolean) => {
@@ -130,7 +154,18 @@ const CostumeSets = () => {
           </Grid>
         ))}
       </Grid>
-      {count}
+      {costumeSets.length < count && (
+        <Stack m={1} direction="row" justifyContent="center">
+          <Button
+            variant="outlined"
+            onClick={handleLoadMore}
+            disabled={loading}
+          >
+            Load More
+          </Button>
+        </Stack>
+      )}
+      {count}{costumeSets.length}
     </>
   );
 };

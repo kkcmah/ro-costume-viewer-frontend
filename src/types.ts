@@ -68,4 +68,15 @@ export interface CostumeSet {
   isPublic: boolean;
 }
 
+export interface CostumeSetsPagedParams {
+  lastSeenIds?: string[];
+  name?: string;
+  lastLikeValue?: number;
+}
+
+export interface CostumeSetsWithCount {
+  costumeSets: CostumeSet[];
+  count: number;
+}
+
 export type NewCostumeSet = Omit<CostumeSet, "id" | "likes" | "owner">;

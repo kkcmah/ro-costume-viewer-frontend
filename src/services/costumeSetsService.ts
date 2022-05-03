@@ -1,13 +1,19 @@
 import axios from "axios";
-import { CostumeSet, NewCostumeSet } from "../types";
+import {
+  CostumeSet,
+  CostumeSetsPagedParams,
+  CostumeSetsWithCount,
+  NewCostumeSet,
+} from "../types";
 import authHeaderService from "./authHeaderService";
 
 const baseUrl = "/api/costumeSets";
 
-const getAll = async (name = "", lastSeenId = "") => {
-  console.log("get NAME", name);
-  console.log("get SEEN", lastSeenId);
-  const res = await axios.get<CostumeSet[]>(`${baseUrl}`);
+const getAll = async (params: CostumeSetsPagedParams) => {
+  console.log("PARAMS", params);
+  const res = await axios.post<CostumeSetsWithCount>(`${baseUrl}/params`, {
+    ...params,
+  });
   return res.data;
 };
 
