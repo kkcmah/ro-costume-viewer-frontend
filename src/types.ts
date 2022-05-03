@@ -52,3 +52,20 @@ export interface CostumeListRetObj {
   correctedParams: CostumeURLSearchParams;
   rowsOptions: number[];
 }
+
+export interface Owner {
+  id: string;
+  username: string;
+}
+
+export interface CostumeSet {
+  id: string;
+  name: string;
+  description: string;
+  costumes: Costume[];
+  likes: number;
+  owner: Owner;
+  isPublic: boolean;
+}
+
+export type NewCostumeSet = Omit<CostumeSet, "id" | "likes" | "owner">;

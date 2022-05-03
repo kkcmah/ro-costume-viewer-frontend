@@ -4,6 +4,7 @@ import { User } from "../types";
 export enum Types {
   SET_USER = "SET_USER",
   SET_FAV_COSTUMES = "SET_FAV_COSTUMES",
+  SET_LIKED_SETS = "SET_LIKED_SETS",
 }
 
 export type Action =
@@ -13,6 +14,10 @@ export type Action =
     }
   | {
       type: Types.SET_FAV_COSTUMES;
+      payload: string[];
+    }
+  | {
+      type: Types.SET_LIKED_SETS;
       payload: string[];
     };
 
@@ -27,6 +32,10 @@ export const setFavCostumes = (costumeIds: string[]): Action => {
   return { type: Types.SET_FAV_COSTUMES, payload: costumeIds };
 };
 
+export const setLikedSets = (costumeSetIds: string[]): Action => {
+  return { type: Types.SET_LIKED_SETS, payload: costumeSetIds };
+};
+
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case Types.SET_USER:
@@ -38,6 +47,18 @@ export const reducer = (state: State, action: Action): State => {
           user: {
             ...state.user,
             favCostumes: action.payload,
+          },
+        };
+      }
+      return state;
+    }
+    case Types.SET_LIKED_SETS: {
+      if (state.user) {
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            likedCostumeSets: action.payload,
           },
         };
       }

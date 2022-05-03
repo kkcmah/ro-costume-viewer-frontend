@@ -13,6 +13,8 @@ import SignUp from "./components/SignUp/SignUp";
 import Logout from "./components/Logout/Logout";
 import { Navigate } from "react-router-dom";
 import NoMatchPage from "./components/NoMatchPage/NoMatchPage";
+import CostumeSets from "./components/CostumeSets/CostumeSets";
+import CreateCostumeSet from "./components/CreateCostumeSet/CreateCostumeSet";
 
 const App = () => {
   const [state, dispatch] = useContext(StateContext);
@@ -53,6 +55,8 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/logout" element={<Logout />} />
+            <Route path="/sets" element={<CostumeSets />} />
+            <Route path="/sets/create" element={<CreateCostumeSet />} />
             <Route
               path="/testnav"
               element={
