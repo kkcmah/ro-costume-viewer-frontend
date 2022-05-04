@@ -1,3 +1,4 @@
+import { ChangeEvent, useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -7,7 +8,6 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
-import { ChangeEvent, useState } from "react";
 import { Costume } from "../../types";
 import "./CostumePreviewDialog.css";
 

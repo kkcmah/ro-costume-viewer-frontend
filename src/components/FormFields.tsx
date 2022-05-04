@@ -1,10 +1,12 @@
 import { useField } from "formik";
-import { TextField } from "@material-ui/core";
+import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import FormHelperText from "@mui/material/FormHelperText";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 import "./FormFields.css";
 
 export interface SelectOption {
@@ -19,22 +21,35 @@ interface MyFieldProps {
   placeholder?: string;
   type?: string;
   required?: boolean;
+  multiline?: boolean;
+  minRows?: number;
+  disabled?: boolean;
 }
 
-export const MyTextField = ({ label, id, type, ...props }: MyFieldProps) => {
+export const MyTextField = ({
+  label,
+  id,
+  type,
+  // multiline = false,
+  minRows = 1,
+  ...props
+}: MyFieldProps) => {
   const [field, meta] = useField(props);
   return (
-    <div className="my-text-field">
+    <div className="mb-8px">
       <TextField
         fullWidth
         id={id}
         label={label}
         type={type}
+        // multiline={multiline}
+        minRows={minRows}
         variant="outlined"
         required={props.required}
         error={meta.touched && Boolean(meta.error)}
         helperText={meta.touched && meta.error}
         {...field}
+        {...props}
       ></TextField>
     </div>
   );
@@ -57,7 +72,7 @@ export const MySelect = ({
 }: MySelectProps) => {
   const [field, meta] = useField(name);
   return (
-    <div>
+    <div className="mb-8px">
       <FormControl
         sx={{ marginBottom: "10px" }}
         fullWidth
@@ -73,6 +88,25 @@ export const MySelect = ({
         </Select>
         <FormHelperText>{meta.touched && meta.error}</FormHelperText>
       </FormControl>
+    </div>
+  );
+};
+
+interface MySwitchProps {
+  name: string;
+  label: string;
+  id: string;
+  disabled?: boolean;
+}
+
+export const MySwitch = ({ name, label, id, ...props }: MySwitchProps) => {
+  const [field] = useField(name);
+  return (
+    <div className="mb-8px">
+      <FormControlLabel
+        control={<Switch id={id} {...field} {...props} />}
+        label={label}
+      />
     </div>
   );
 };

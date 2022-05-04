@@ -1,15 +1,27 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import LinearProgress from "@mui/material/LinearProgress";
+import Typography from "@mui/material/Typography";
 import costumesService from "../../services/costumesService";
 import { formatErrorAsString } from "../../services/helpersService";
 import { Costume, CostumeURLSearchParams } from "../../types";
 import AlertNotification from "../AlertNotification/AlertNotification";
 import useAlertNotification from "../AlertNotification/useAlertNotification";
 import CLSearchForm, { CLSearchValues } from "./CLSearchForm";
-import CostumesTable from "./CostumesTable";
+import CostumesTable from "../CostumesTable/CostumesTable";
 
-const CostumeList = () => {
+interface CostumeListProps {
+  // creating set related props
+  isCreatingSet?: boolean;
+  handleCosCheckChange?: (costumeChanged: Costume) => void;
+  costumesInSet?: Costume[];
+}
+
+const CostumeList = ({
+  isCreatingSet = false,
+  handleCosCheckChange = undefined,
+  costumesInSet = [],
+}: CostumeListProps) => {
   const [costumes, setCostumes] = useState<Costume[]>([]);
   const { setErrorMsg, ...notif } = useAlertNotification();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,9 +37,11 @@ const CostumeList = () => {
   const nameParam = searchParams.get("name");
   const equipSlotsParam = searchParams.get("equipSlots");
 
+  const depArr = isCreatingSet ? [] : [searchParams];
+
   useEffect(() => {
     void getCostumes(getURLParams());
-  }, [searchParams]);
+  }, depArr);
 
   const getURLParams = (): CostumeURLSearchParams => {
     const params: CostumeURLSearchParams = {};
@@ -80,6 +94,9 @@ const CostumeList = () => {
       setCostumes(response.costumes);
       setCount(response.count);
       setRowsPerPageOptions(response.rowsOptions);
+      if (isCreatingSet) {
+        setSearchParams({ ...response.correctedParams }, { replace: true });
+      }
     } catch (error) {
       setErrorMsg(formatErrorAsString(error));
     } finally {
@@ -98,15 +115,25 @@ const CostumeList = () => {
     if (newFormValues.equipSlots.length !== 0)
       newSearchParams.equipSlots = newFormValues.equipSlots.join(",");
     setSearchParams({ ...newSearchParams });
+    if (isCreatingSet) {
+      void getCostumes(newSearchParams);
+    }
   };
 
   const handleReset = () => {
-    setSearchParams({ page: "0" });
+    const newSearchParams = { page: "0" };
+    setSearchParams(newSearchParams);
+    if (isCreatingSet) {
+      void getCostumes(newSearchParams);
+    }
   };
 
   const onPageChange = (newPage: number) => {
     const newSearchParams = { ...getURLParams(), page: newPage.toString() };
     setSearchParams({ ...newSearchParams });
+    if (isCreatingSet) {
+      void getCostumes(newSearchParams);
+    }
   };
 
   const onChangeRowsPerPage = (newRowsPer: number) => {
@@ -116,10 +143,16 @@ const CostumeList = () => {
       rows: newRowsPer.toString(),
     };
     setSearchParams({ ...newSearchParams });
+    if (isCreatingSet) {
+      void getCostumes(newSearchParams);
+    }
   };
 
   return (
     <>
+      <Typography mb={1} variant="h5">
+        Costumes
+      </Typography>
       <AlertNotification {...notif}></AlertNotification>
       <CLSearchForm
         handleSearch={handleSearch}
@@ -136,6 +169,9 @@ const CostumeList = () => {
         onChangeRowsPerPage={onChangeRowsPerPage}
         count={count}
         rowsPerPageOptions={rowsPerPageOptions}
+        isCreatingSet={isCreatingSet}
+        handleCosCheckChange={handleCosCheckChange}
+        costumesInSet={costumesInSet}
       ></CostumesTable>
     </>
   );

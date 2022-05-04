@@ -15,6 +15,7 @@ import { Navigate } from "react-router-dom";
 import NoMatchPage from "./components/NoMatchPage/NoMatchPage";
 import CostumeSets from "./components/CostumeSets/CostumeSets";
 import CreateCostumeSet from "./components/CreateCostumeSet/CreateCostumeSet";
+import Profile from "./components/Profile/Profile";
 
 const App = () => {
   const [state, dispatch] = useContext(StateContext);
@@ -57,6 +58,7 @@ const App = () => {
             <Route path="/logout" element={<Logout />} />
             <Route path="/sets" element={<CostumeSets />} />
             <Route path="/sets/create" element={<CreateCostumeSet />} />
+            <Route path="/profile" element={<Profile />} />
             <Route
               path="/testnav"
               element={

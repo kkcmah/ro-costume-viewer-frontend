@@ -79,4 +79,8 @@ export interface CostumeSetsWithCount {
   count: number;
 }
 
-export type NewCostumeSet = Omit<CostumeSet, "id" | "likes" | "owner">;
+export interface NewCostumeSet
+  extends Omit<CostumeSet, "id" | "likes" | "owner" | "costumes"> {
+  // mongodb object ids
+  costumes: string[];
+}

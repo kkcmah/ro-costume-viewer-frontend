@@ -1,5 +1,7 @@
+import { ChangeEvent, useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Paper from "@mui/material/Paper";
@@ -12,8 +14,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Costume } from "../../types";
-import { ChangeEvent, useContext, useState } from "react";
-import CostumePreviewDialog from "./CostumePreviewDialog";
+import CostumePreviewDialog from "../CostumePreviewDialog/CostumePreviewDialog";
 import { StateContext } from "../../state/state";
 import { setFavCostumes } from "../../state/reducer";
 import costumesService from "../../services/costumesService";
@@ -30,6 +31,10 @@ interface CostumesTableProps {
   onChangeRowsPerPage: (newRowsPer: number) => void;
   count: number;
   rowsPerPageOptions: number[];
+  // creating set related props
+  isCreatingSet?: boolean;
+  handleCosCheckChange?: (costumeChanged: Costume) => void;
+  costumesInSet?: Costume[];
 }
 
 const CostumesTable = ({
@@ -40,6 +45,9 @@ const CostumesTable = ({
   onChangeRowsPerPage,
   count,
   rowsPerPageOptions,
+  isCreatingSet = false,
+  handleCosCheckChange = undefined,
+  costumesInSet = [],
 }: CostumesTableProps) => {
   const [previewOpen, setPreviewOpen] = useState<boolean>(false);
   const [curCosPreview, setCurCosPreview] = useState<Costume>();
@@ -78,6 +86,15 @@ const CostumesTable = ({
     onChangeRowsPerPage(+event.target.value);
   };
 
+  const isChecked = (costumeId: string) => {
+    for (const costume of costumesInSet) {
+      if (costume.id === costumeId) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   if (costumes.length === 0) {
     return <div>No costumes found. :(</div>;
   }
@@ -93,6 +110,8 @@ const CostumesTable = ({
               <TableCell>id</TableCell>
               <TableCell>Slots</TableCell>
               <TableCell>Tags</TableCell>
+              {/* empty table cell header for actions so that the divider is fullwidth */}
+              {state.user && <TableCell></TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -107,6 +126,12 @@ const CostumesTable = ({
                         flexWrap: "wrap",
                       }}
                     >
+                      {isCreatingSet && handleCosCheckChange && (
+                        <Checkbox
+                          checked={isChecked(cos.id)}
+                          onChange={() => handleCosCheckChange(cos)}
+                        />
+                      )}
                       <Box mr={1} className="costume costume-18740"></Box>
                       <div>{cos.name}</div>
                       {cos.previewUrl && (
