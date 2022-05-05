@@ -62,19 +62,44 @@ const App = () => {
               path="/login"
               element={<Login title={APP_TITLE + "Login"} />}
             />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/sets" element={<CostumeSets />} />
-            <Route path="/sets/:costumeSetId" element={<CostumeSetDetail />} />
-            <Route path="/sets/create" element={<CreateCostumeSet />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route
+              path="/signup"
+              element={<SignUp title={APP_TITLE + "Sign Up"} />}
+            />
+            <Route
+              path="/logout"
+              element={<Logout title={APP_TITLE + "Logout"} />}
+            />
+            <Route
+              path="/sets"
+              element={<CostumeSets title={APP_TITLE + "Sets"} />}
+            />
+            <Route
+              path="/sets/:costumeSetId"
+              element={<CostumeSetDetail title={APP_TITLE + "Set Detail"} />}
+            />
+            <Route
+              path="/sets/create"
+              element={<CreateCostumeSet title={APP_TITLE + "Create Set"} />}
+            />
+            <Route
+              path="/profile"
+              element={<Profile title={APP_TITLE + "Profile"} />}
+            />
             <Route
               path="/testnav"
               element={
-                state.user ? <Navigate to="/"></Navigate> : <Logout></Logout>
+                state.user ? (
+                  <Navigate to="/"></Navigate>
+                ) : (
+                  <Logout title={APP_TITLE + "Logout"}></Logout>
+                )
               }
             ></Route>
-            <Route path="/*" element={<NoMatchPage />} />
+            <Route
+              path="/*"
+              element={<NoMatchPage title={APP_TITLE + "404"} />}
+            />
           </Routes>
         </Container>
       </Router>

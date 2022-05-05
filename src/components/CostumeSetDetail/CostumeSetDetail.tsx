@@ -13,8 +13,14 @@ import useAlertNotification from "../AlertNotification/useAlertNotification";
 import CSDCostumeCard from "./CSDCostumeCard";
 import { StateContext } from "../../state/state";
 import { setLikedSets } from "../../state/reducer";
+import { useTitle } from "../../hooks/useTitle";
 
-const CostumeSetDetail = () => {
+interface CostumeSetDetailProps {
+  title: string;
+}
+
+const CostumeSetDetail = ({ title }: CostumeSetDetailProps) => {
+  useTitle(title);
   const { costumeSetId } = useParams();
   const { setErrorMsg, ...notif } = useAlertNotification();
   const [loading, setLoading] = useState<boolean>(true);

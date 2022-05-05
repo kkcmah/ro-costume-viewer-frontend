@@ -11,8 +11,14 @@ import { formatErrorAsString } from "../../services/helpersService";
 import costumeSetsService from "../../services/costumeSetsService";
 import useAlertNotification from "../AlertNotification/useAlertNotification";
 import AlertNotification from "../AlertNotification/AlertNotification";
+import { useTitle } from "../../hooks/useTitle";
 
-const CreateCostumeSet = () => {
+interface CreateCostumeSetProps {
+  title: string;
+}
+
+const CreateCostumeSet = ({ title }: CreateCostumeSetProps) => {
+  useTitle(title);
   const [state] = useContext(StateContext);
   // instead of handling costumeIds in form
   const [costumesInSet, setCostumesInSet] = useState<Costume[]>([]);

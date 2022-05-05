@@ -19,8 +19,14 @@ import CSSearchForm from "./CSSearchForm";
 import { StateContext } from "../../state/state";
 import CostumeSetCard from "./CostumeSetCard";
 import { setLikedSets } from "../../state/reducer";
+import { useTitle } from "../../hooks/useTitle";
 
-const CostumeSets = () => {
+interface CostumeSetsProps {
+  title: string;
+}
+
+const CostumeSets = ({ title }: CostumeSetsProps) => {
+  useTitle(title);
   const [state, dispatch] = useContext(StateContext);
   const [loading, setLoading] = useState<boolean>(true);
   const [costumeSets, setCostumeSets] = useState<CostumeSet[]>([]);
@@ -165,7 +171,8 @@ const CostumeSets = () => {
           </Button>
         </Stack>
       )}
-      {count}{costumeSets.length}
+      {count}
+      {costumeSets.length}
     </>
   );
 };

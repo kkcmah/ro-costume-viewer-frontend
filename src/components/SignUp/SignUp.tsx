@@ -10,8 +10,14 @@ import "./SignUp.css";
 import { formatErrorAsString } from "../../services/helpersService";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useTitle } from "../../hooks/useTitle";
 
-const Login = () => {
+interface LoginProps {
+  title: string;
+}
+
+const Login = ({ title }: LoginProps) => {
+  useTitle(title);
   const { setErrorMsg, setSuccessMsg, ...notif } = useAlertNotification();
   const [newAccCreated, setnewAccCreated] = useState<boolean>(false);
 
