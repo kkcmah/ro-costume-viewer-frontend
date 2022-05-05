@@ -16,6 +16,8 @@ import NoMatchPage from "./components/NoMatchPage/NoMatchPage";
 import CostumeSets from "./components/CostumeSets/CostumeSets";
 import CreateCostumeSet from "./components/CreateCostumeSet/CreateCostumeSet";
 import Profile from "./components/Profile/Profile";
+import CostumeSetDetail from "./components/CostumeSetDetail/CostumeSetDetail";
+import { APP_TITLE } from "./constants";
 
 const App = () => {
   const [state, dispatch] = useContext(StateContext);
@@ -52,11 +54,18 @@ const App = () => {
         <Container>
           <Header></Header>
           <Routes>
-            <Route path="/" element={<CostumeList />} />
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/"
+              element={<CostumeList title={APP_TITLE + "Home"} />}
+            />
+            <Route
+              path="/login"
+              element={<Login title={APP_TITLE + "Login"} />}
+            />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/sets" element={<CostumeSets />} />
+            <Route path="/sets/:costumeSetId" element={<CostumeSetDetail />} />
             <Route path="/sets/create" element={<CreateCostumeSet />} />
             <Route path="/profile" element={<Profile />} />
             <Route

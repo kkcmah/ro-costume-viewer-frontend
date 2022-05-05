@@ -1,14 +1,4 @@
-#loop-switch {
-  margin: auto;
-}
-
 #preview-video {
   max-height: 400px;
   width: 100%;
-}
-
-.icon-container {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
 }

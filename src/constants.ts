@@ -1,1 +1,1 @@
-export const IM_A_CONST = "CONST";
+export const APP_TITLE = "RO Costume Viewer | ";

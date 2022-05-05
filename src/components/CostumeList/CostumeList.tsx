@@ -9,8 +9,11 @@ import AlertNotification from "../AlertNotification/AlertNotification";
 import useAlertNotification from "../AlertNotification/useAlertNotification";
 import CLSearchForm, { CLSearchValues } from "./CLSearchForm";
 import CostumesTable from "../CostumesTable/CostumesTable";
+import { useTitle } from "../../hooks/useTitle";
+// import { APP_TITLE } from "../../constants";
 
 interface CostumeListProps {
+  title?: string;
   // creating set related props
   isCreatingSet?: boolean;
   handleCosCheckChange?: (costumeChanged: Costume) => void;
@@ -18,10 +21,12 @@ interface CostumeListProps {
 }
 
 const CostumeList = ({
+  title,
   isCreatingSet = false,
   handleCosCheckChange = undefined,
   costumesInSet = [],
 }: CostumeListProps) => {
+  const { setTitle } = useTitle(title);
   const [costumes, setCostumes] = useState<Costume[]>([]);
   const { setErrorMsg, ...notif } = useAlertNotification();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -40,6 +45,9 @@ const CostumeList = ({
   const depArr = isCreatingSet ? [] : [searchParams];
 
   useEffect(() => {
+    if (title) {
+      setTitle(title + " " + searchParams.toString());
+    }
     void getCostumes(getURLParams());
   }, depArr);
 

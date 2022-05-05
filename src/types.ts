@@ -66,6 +66,8 @@ export interface CostumeSet {
   likes: number;
   owner: Owner;
   isPublic: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface CostumeSetsPagedParams {
@@ -80,7 +82,7 @@ export interface CostumeSetsWithCount {
 }
 
 export interface NewCostumeSet
-  extends Omit<CostumeSet, "id" | "likes" | "owner" | "costumes"> {
+  extends Pick<CostumeSet, "name" | "description" | "isPublic"> {
   // mongodb object ids
   costumes: string[];
 }

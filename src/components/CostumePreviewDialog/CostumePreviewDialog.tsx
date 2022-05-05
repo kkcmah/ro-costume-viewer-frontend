@@ -8,6 +8,7 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
+import Typography from "@mui/material/Typography";
 import { Costume } from "../../types";
 import "./CostumePreviewDialog.css";
 
@@ -54,25 +55,25 @@ const CostumePreviewDialog = ({
               alignItems={{ xs: "center", md: "initial" }}
               spacing={5}
             >
-              <div className="icon-container">
-                <div>Icon:</div>
-                <div className="costume costume-18740"></div>
-              </div>
+              <Stack direction="row" alignItems="center">
+                <Typography>Icon:</Typography>
+                <Typography className="costume costume-18740"></Typography>
+              </Stack>
 
-              <div>Id: {curCosPreview?.itemId}</div>
-              <div>Slots: {curCosPreview?.equipSlots}</div>
-              <div>
+              <Typography>Id: {curCosPreview?.itemId}</Typography>
+              <Typography>Slots: {curCosPreview?.equipSlots}</Typography>
+              <Typography>
                 Tags:{" "}
                 {curCosPreview?.costumeTags.map((tag) => tag.name).join(" ")}
-              </div>
+              </Typography>
             </Stack>
           </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
-        <div id="loop-switch">
+        <Typography m="auto">
           <Switch checked={loop} onChange={handleChange} /> Loop Video
-        </div>
+        </Typography>
         <Button onClick={closePreview}>Close</Button>
       </DialogActions>
     </Dialog>

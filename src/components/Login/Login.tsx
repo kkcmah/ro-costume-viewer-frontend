@@ -12,8 +12,14 @@ import useAlertNotification from "../AlertNotification/useAlertNotification";
 import AlertNotification from "../AlertNotification/AlertNotification";
 import { formatErrorAsString } from "../../services/helpersService";
 import "./Login.css";
+import { useTitle } from "../../hooks/useTitle";
 
-const Login = () => {
+interface LoginProps {
+  title: string;
+}
+
+const Login = ({ title }: LoginProps) => {
+  useTitle(title);
   const [, dispatch] = useContext(StateContext);
   const { setErrorMsg, ...notif } = useAlertNotification();
   const navigate = useNavigate();

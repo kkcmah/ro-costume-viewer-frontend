@@ -17,6 +17,11 @@ const getAll = async (params: CostumeSetsPagedParams) => {
   return res.data;
 };
 
+const getById = async (costumeSetId: string) => {
+  const res = await axios.get<CostumeSet>(`${baseUrl}/${costumeSetId}`);
+  return res.data;
+};
+
 const createSet = async (newCostumeSet: NewCostumeSet) => {
   const res = await axios.post<CostumeSet>(
     `${baseUrl}`,
@@ -64,4 +69,12 @@ const updateSet = async (
   return res.data;
 };
 
-export default { getAll, createSet, deleteSet, likeSet, unlikeSet, updateSet };
+export default {
+  getAll,
+  getById,
+  createSet,
+  deleteSet,
+  likeSet,
+  unlikeSet,
+  updateSet,
+};
