@@ -53,6 +53,7 @@ const CostumesTable = ({
   const [curCosPreview, setCurCosPreview] = useState<Costume>();
   const { setErrorMsg, ...notif } = useAlertNotification();
   const [state, dispatch] = useContext(StateContext);
+  const [loadingFavClick, setLoadingFavClick] = useState<boolean>(false);
 
   const openPreview = (costume: Costume) => {
     setCurCosPreview(costume);
@@ -65,6 +66,8 @@ const CostumesTable = ({
 
   const toggleFavCostume = async (costumeId: string) => {
     if (!state.user) return;
+    if (loadingFavClick) return;
+    setLoadingFavClick(true);
     try {
       if (state.user.favCostumes.includes(costumeId)) {
         const favCostumes = await costumesService.unfavorite(costumeId);
@@ -75,6 +78,8 @@ const CostumesTable = ({
       }
     } catch (error) {
       setErrorMsg(formatErrorAsString(error));
+    } finally {
+      setLoadingFavClick(false);
     }
   };
 

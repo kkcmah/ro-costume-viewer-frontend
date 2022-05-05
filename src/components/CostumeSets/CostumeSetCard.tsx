@@ -39,7 +39,7 @@ const CostumeSetCard = ({ costumeSet, toggleLikeSet }: CostumeSetCardProps) => {
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vulputate nunc purus, ut porta morbi.m ipsum dolor sit amet, consectetur adipiscing elit. Nullam vulputate nunc purus, ";
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card>
       <CardHeader
         title={costumeSet.name}
         subheader={`created by: ${costumeSet.owner.username}`}

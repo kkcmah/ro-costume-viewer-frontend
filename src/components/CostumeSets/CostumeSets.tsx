@@ -33,8 +33,9 @@ const CostumeSets = ({ title }: CostumeSetsProps) => {
   const { setErrorMsg, ...notif } = useAlertNotification();
   const [count, setCount] = useState<number>(-1);
 
-  const [name, setName] = useState("");
-  const [prevSearchName, setPrevSearchName] = useState("");
+  const [name, setName] = useState<string>("");
+  const [prevSearchName, setPrevSearchName] = useState<string>("");
+  const [loadingLikeClick, setLoadingLikeClick] = useState<boolean>(false);
 
   useEffect(() => {
     void getCostumeSets();
@@ -69,6 +70,9 @@ const CostumeSets = ({ title }: CostumeSetsProps) => {
 
   const handleSearch = (event: SyntheticEvent) => {
     event.preventDefault();
+    if (loading) {
+      return;
+    }
     const params: CostumeSetsPagedParams = {
       name,
     };
@@ -77,6 +81,9 @@ const CostumeSets = ({ title }: CostumeSetsProps) => {
   };
 
   const handleLoadMore = () => {
+    if (loading) {
+      return;
+    }
     const params: CostumeSetsPagedParams = {
       lastSeenIds: costumeSets.map((cs) => cs.id),
       name: prevSearchName,
@@ -105,7 +112,11 @@ const CostumeSets = ({ title }: CostumeSetsProps) => {
       setErrorMsg("Login to like sets.");
       return;
     }
+    if (loadingLikeClick) {
+      return;
+    }
     try {
+      setLoadingLikeClick(true);
       if (state.user.likedCostumeSets.includes(costumeSetId)) {
         const likedSets = await costumeSetsService.unlikeSet(costumeSetId);
         dispatch(setLikedSets(likedSets));
@@ -117,6 +128,8 @@ const CostumeSets = ({ title }: CostumeSetsProps) => {
       }
     } catch (error) {
       setErrorMsg(formatErrorAsString(error));
+    } finally {
+      setLoadingLikeClick(false);
     }
   };
 
@@ -143,6 +156,7 @@ const CostumeSets = ({ title }: CostumeSetsProps) => {
           name={name}
           handleChange={handleChange}
           handleSearch={handleSearch}
+          loading={loading}
         ></CSSearchForm>
       </Stack>
 
@@ -152,7 +166,7 @@ const CostumeSets = ({ title }: CostumeSetsProps) => {
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
         {costumeSets.map((cosSet, ind) => (
-          <Grid item xs={2} sm={4} md={4} key={ind}>
+          <Grid item xs={4} sm={4} md={4} key={ind}>
             <CostumeSetCard
               costumeSet={cosSet}
               toggleLikeSet={toggleLikeSet}

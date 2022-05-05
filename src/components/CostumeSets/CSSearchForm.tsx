@@ -11,12 +11,14 @@ interface CSSearchFormProps {
   name: string;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handleSearch: (event: SyntheticEvent) => void;
+  loading: boolean;
 }
 
 const CSSearchForm = ({
   name,
   handleChange,
   handleSearch,
+  loading,
 }: CSSearchFormProps) => {
   return (
     <Box
@@ -34,6 +36,7 @@ const CSSearchForm = ({
           value={name}
           onChange={handleChange}
           placeholder="Search Name"
+          disabled={loading}
           endAdornment={
             <InputAdornment position="end">
               <IconButton aria-label="search name" onClick={handleSearch}>
