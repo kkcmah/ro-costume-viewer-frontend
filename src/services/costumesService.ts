@@ -16,6 +16,21 @@ const getAll = async (params: CostumeURLSearchParams) => {
   return res.data;
 };
 
+const getAllFav = async (params: CostumeURLSearchParams) => {
+  let query = "/profilefav/params?";
+  // construct the url with query params
+  for (const [key, value] of Object.entries(params)) {
+    if (value !== null) {
+      query += `${key}=${encodeURIComponent(value as string)}&`;
+    }
+  }
+  const res = await axios.get<CostumeListRetObj>(
+    `${baseUrl}${query}`,
+    authHeaderService.getAuthHeader()
+  );
+  return res.data;
+};
+
 const favorite = async (costumeId: string) => {
   const res = await axios.post<string[]>(
     `${baseUrl}/favorite`,
@@ -34,4 +49,4 @@ const unfavorite = async (costumeId: string) => {
   return res.data;
 };
 
-export default { getAll, favorite, unfavorite };
+export default { getAll, getAllFav, favorite, unfavorite };

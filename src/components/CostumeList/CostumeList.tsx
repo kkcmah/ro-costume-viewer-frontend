@@ -4,13 +4,16 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import costumesService from "../../services/costumesService";
 import { formatErrorAsString } from "../../services/helpersService";
-import { Costume, CostumeURLSearchParams } from "../../types";
+import {
+  Costume,
+  CostumeListRetObj,
+  CostumeURLSearchParams,
+} from "../../types";
 import AlertNotification from "../AlertNotification/AlertNotification";
 import useAlertNotification from "../AlertNotification/useAlertNotification";
 import CLSearchForm, { CLSearchValues } from "./CLSearchForm";
 import CostumesTable from "../CostumesTable/CostumesTable";
 import { useTitle } from "../../hooks/useTitle";
-// import { APP_TITLE } from "../../constants";
 
 interface CostumeListProps {
   title?: string;
@@ -18,6 +21,8 @@ interface CostumeListProps {
   isCreatingSet?: boolean;
   handleCosCheckChange?: (costumeChanged: Costume) => void;
   costumesInSet?: Costume[];
+  // profile related props
+  isProfile?: boolean;
 }
 
 const CostumeList = ({
@@ -25,6 +30,7 @@ const CostumeList = ({
   isCreatingSet = false,
   handleCosCheckChange = undefined,
   costumesInSet = [],
+  isProfile = false,
 }: CostumeListProps) => {
   const { setTitle } = useTitle(title);
   const [costumes, setCostumes] = useState<Costume[]>([]);
@@ -42,7 +48,7 @@ const CostumeList = ({
   const nameParam = searchParams.get("name");
   const equipSlotsParam = searchParams.get("equipSlots");
 
-  const depArr = isCreatingSet ? [] : [searchParams];
+  const depArr = isCreatingSet || isProfile ? [] : [searchParams];
 
   useEffect(() => {
     if (title) {
@@ -95,14 +101,25 @@ const CostumeList = ({
     return 0;
   })();
 
+  // if profile or creating, then this is called manually instead of via depArr so that it doesn't push to history
   const getCostumes = async (newSearchParams: CostumeURLSearchParams) => {
     try {
       setLoading(true);
-      const response = await costumesService.getAll(newSearchParams);
+      let response: CostumeListRetObj = {
+        costumes: [],
+        count: 0,
+        correctedParams: {},
+        rowsOptions: [10, 25, 100],
+      };
+      if (isProfile) {
+        response = await costumesService.getAllFav(newSearchParams);
+      } else {
+        response = await costumesService.getAll(newSearchParams);
+      }
       setCostumes(response.costumes);
       setCount(response.count);
       setRowsPerPageOptions(response.rowsOptions);
-      if (isCreatingSet) {
+      if (isCreatingSet || isProfile) {
         setSearchParams({ ...response.correctedParams }, { replace: true });
       }
     } catch (error) {
@@ -123,7 +140,7 @@ const CostumeList = ({
     if (newFormValues.equipSlots.length !== 0)
       newSearchParams.equipSlots = newFormValues.equipSlots.join(",");
     setSearchParams({ ...newSearchParams });
-    if (isCreatingSet) {
+    if (isCreatingSet || isProfile) {
       void getCostumes(newSearchParams);
     }
   };
@@ -131,7 +148,7 @@ const CostumeList = ({
   const handleReset = () => {
     const newSearchParams = { page: "0" };
     setSearchParams(newSearchParams);
-    if (isCreatingSet) {
+    if (isCreatingSet || isProfile) {
       void getCostumes(newSearchParams);
     }
   };
@@ -139,7 +156,7 @@ const CostumeList = ({
   const onPageChange = (newPage: number) => {
     const newSearchParams = { ...getURLParams(), page: newPage.toString() };
     setSearchParams({ ...newSearchParams });
-    if (isCreatingSet) {
+    if (isCreatingSet || isProfile) {
       void getCostumes(newSearchParams);
     }
   };
@@ -151,7 +168,7 @@ const CostumeList = ({
       rows: newRowsPer.toString(),
     };
     setSearchParams({ ...newSearchParams });
-    if (isCreatingSet) {
+    if (isCreatingSet || isProfile) {
       void getCostumes(newSearchParams);
     }
   };
