@@ -1,4 +1,5 @@
 import AppBar from "@mui/material/AppBar";
+import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
@@ -45,7 +46,9 @@ const Header = () => {
           )}
           {state.user && (
             <>
-              <span>Logged in as {state.user.username}</span>
+              <Button component={Link} to="/profile" color="inherit">
+                <Avatar>{state.user.username[0]}</Avatar>
+              </Button>
               <Button color="inherit" onClick={handleLogout}>
                 Log out
               </Button>

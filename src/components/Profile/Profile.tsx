@@ -8,6 +8,7 @@ import { StateContext } from "../../state/state";
 import { useTitle } from "../../hooks/useTitle";
 import CostumeList from "../CostumeList/CostumeList";
 import { Link } from "react-router-dom";
+import CostumeSets from "../CostumeSets/CostumeSets";
 
 interface ProfileProps {
   title: string;
@@ -89,7 +90,15 @@ const Profile = ({ title }: ProfileProps) => {
         {...tabPanelA11yProps(TABS_OBJ["liked-sets"])}
       >
         {tabValue === TABS_OBJ["liked-sets"] && (
-          <Typography>Item two</Typography>
+          <>
+            {state.user.likedCostumeSets.length === 0 && (
+              <Alert severity="info">
+                Looks like you do not have any liked costume sets :(. Head to{" "}
+                <Link to="/sets">Sets</Link> to add some.
+              </Alert>
+            )}
+            <CostumeSets title={title} isProfile={true}></CostumeSets>
+          </>
         )}
       </div>
     </Box>

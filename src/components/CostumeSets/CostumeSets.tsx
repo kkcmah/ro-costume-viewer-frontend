@@ -12,7 +12,11 @@ import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
 import costumeSetsService from "../../services/costumeSetsService";
 import { formatErrorAsString } from "../../services/helpersService";
-import { CostumeSet, CostumeSetsPagedParams } from "../../types";
+import {
+  CostumeSet,
+  CostumeSetsPagedParams,
+  CostumeSetsWithCount,
+} from "../../types";
 import AlertNotification from "../AlertNotification/AlertNotification";
 import useAlertNotification from "../AlertNotification/useAlertNotification";
 import CSSearchForm from "./CSSearchForm";
@@ -23,9 +27,11 @@ import { useTitle } from "../../hooks/useTitle";
 
 interface CostumeSetsProps {
   title: string;
+  // profile related props
+  isProfile?: boolean;
 }
 
-const CostumeSets = ({ title }: CostumeSetsProps) => {
+const CostumeSets = ({ title, isProfile }: CostumeSetsProps) => {
   useTitle(title);
   const [state, dispatch] = useContext(StateContext);
   const [loading, setLoading] = useState<boolean>(true);
@@ -47,7 +53,15 @@ const CostumeSets = ({ title }: CostumeSetsProps) => {
   ) => {
     try {
       setLoading(true);
-      const response = await costumeSetsService.getAll(params);
+      let response: CostumeSetsWithCount = {
+        costumeSets: [],
+        count: 0,
+      };
+      if (isProfile) {
+        response = await costumeSetsService.getAllLikedPubOrOwn(params);
+      } else {
+        response = await costumeSetsService.getAll(params);
+      }
       console.log(response, isLoadMore);
       setCount(20);
       setCostumeSets((prev) => [...prev, ...response.costumeSets]);
@@ -139,10 +153,10 @@ const CostumeSets = ({ title }: CostumeSetsProps) => {
       <AlertNotification {...notif}></AlertNotification>
       <Stack
         direction="row"
-        justifyContent={state.user ? "space-between" : "end"}
+        justifyContent={state.user && !isProfile ? "space-between" : "end"}
         mb={1}
       >
-        {state.user && (
+        {state.user && !isProfile && (
           <Button
             size="small"
             variant="outlined"

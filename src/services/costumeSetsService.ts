@@ -17,6 +17,18 @@ const getAll = async (params: CostumeSetsPagedParams) => {
   return res.data;
 };
 
+const getAllLikedPubOrOwn = async (params: CostumeSetsPagedParams) => {
+  console.log("PARAMS", params);
+  const res = await axios.post<CostumeSetsWithCount>(
+    `${baseUrl}/profileliked/params`,
+    {
+      ...params,
+    },
+    authHeaderService.getAuthHeader()
+  );
+  return res.data;
+};
+
 const getById = async (costumeSetId: string) => {
   const res = await axios.get<CostumeSet>(`${baseUrl}/${costumeSetId}`);
   return res.data;
@@ -71,6 +83,7 @@ const updateSet = async (
 
 export default {
   getAll,
+  getAllLikedPubOrOwn,
   getById,
   createSet,
   deleteSet,
