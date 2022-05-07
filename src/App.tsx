@@ -18,6 +18,7 @@ import CreateCostumeSet from "./components/CreateCostumeSet/CreateCostumeSet";
 import Profile from "./components/Profile/Profile";
 import CostumeSetDetail from "./components/CostumeSetDetail/CostumeSetDetail";
 import { APP_TITLE } from "./constants";
+import EditCostumeSet from "./components/EditCostumeSet/EditCostumeSet";
 
 const App = () => {
   const [state, dispatch] = useContext(StateContext);
@@ -81,6 +82,10 @@ const App = () => {
             <Route
               path="/sets/create"
               element={<CreateCostumeSet title={APP_TITLE + "Create Set"} />}
+            />
+            <Route
+              path="/sets/edit/:costumeSetId"
+              element={<EditCostumeSet title={APP_TITLE + "Edit Set"} />}
             />
             <Route
               path="/profile"

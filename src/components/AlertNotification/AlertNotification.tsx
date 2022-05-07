@@ -6,7 +6,11 @@ interface AlertNotificationProps {
   closeNotif: () => void;
 }
 
-const AlertNotification = ({ msg, isErr, closeNotif }: AlertNotificationProps) => {
+const AlertNotification = ({
+  msg,
+  isErr,
+  closeNotif,
+}: AlertNotificationProps) => {
   if (!msg) return null;
   return (
     <Alert

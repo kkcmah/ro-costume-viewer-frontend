@@ -23,7 +23,7 @@ const Profile = ({ title }: ProfileProps) => {
     setTabValue(newValue);
   };
 
-  const TABS_OBJ = { "my-set": 0, "fav-costumes": 1, "liked-sets": 2 };
+  const TABS_OBJ = { "my-sets": 0, "fav-costumes": 1, "liked-sets": 2 };
   const TABS = Object.keys(TABS_OBJ);
   const tabA11yProps = (index: number) => {
     return {
@@ -55,7 +55,7 @@ const Profile = ({ title }: ProfileProps) => {
           allowScrollButtonsMobile
           aria-label="profile tabs"
         >
-          <Tab label="My Sets" {...tabA11yProps(TABS_OBJ["my-set"])} />
+          <Tab label="My Sets" {...tabA11yProps(TABS_OBJ["my-sets"])} />
           <Tab
             label="Favorite Costumes"
             {...tabA11yProps(TABS_OBJ["fav-costumes"])}
@@ -64,10 +64,12 @@ const Profile = ({ title }: ProfileProps) => {
         </Tabs>
       </Box>
       <div
-        hidden={tabValue !== TABS_OBJ["my-set"]}
-        {...tabPanelA11yProps(TABS_OBJ["my-set"])}
+        hidden={tabValue !== TABS_OBJ["my-sets"]}
+        {...tabPanelA11yProps(TABS_OBJ["my-sets"])}
       >
-        {tabValue === TABS_OBJ["my-set"] && <Typography>Item zero</Typography>}
+        {tabValue === TABS_OBJ["my-sets"] && (
+          <CostumeSets title={title} isMySets={true}></CostumeSets>
+        )}
       </div>
       <div
         hidden={tabValue !== TABS_OBJ["fav-costumes"]}

@@ -10,7 +10,7 @@ import authHeaderService from "./authHeaderService";
 const baseUrl = "/api/costumeSets";
 
 const getAll = async (params: CostumeSetsPagedParams) => {
-  console.log("PARAMS", params);
+  console.log("PARAMS all public", params);
   const res = await axios.post<CostumeSetsWithCount>(`${baseUrl}/params`, {
     ...params,
   });
@@ -18,7 +18,7 @@ const getAll = async (params: CostumeSetsPagedParams) => {
 };
 
 const getAllLikedPubOrOwn = async (params: CostumeSetsPagedParams) => {
-  console.log("PARAMS", params);
+  console.log("PARAMS liked", params);
   const res = await axios.post<CostumeSetsWithCount>(
     `${baseUrl}/profileliked/params`,
     {
@@ -29,14 +29,43 @@ const getAllLikedPubOrOwn = async (params: CostumeSetsPagedParams) => {
   return res.data;
 };
 
-const getById = async (costumeSetId: string) => {
+const getAllOwned = async (params: CostumeSetsPagedParams) => {
+  console.log("PARAMS owned", params);
+  const res = await axios.post<CostumeSetsWithCount>(
+    `${baseUrl}/owned/params`,
+    {
+      ...params,
+    },
+    authHeaderService.getAuthHeader()
+  );
+  return res.data;
+};
+
+const getPublicById = async (costumeSetId: string) => {
   const res = await axios.get<CostumeSet>(`${baseUrl}/${costumeSetId}`);
+  return res.data;
+};
+
+const getOwnedById = async (costumeSetId: string) => {
+  const res = await axios.get<CostumeSet>(
+    `${baseUrl}/owned/${costumeSetId}`,
+    authHeaderService.getAuthHeader()
+  );
   return res.data;
 };
 
 const createSet = async (newCostumeSet: NewCostumeSet) => {
   const res = await axios.post<CostumeSet>(
     `${baseUrl}`,
+    newCostumeSet,
+    authHeaderService.getAuthHeader()
+  );
+  return res.data;
+};
+
+const editSet = async (newCostumeSet: NewCostumeSet, costumeSetId: string) => {
+  const res = await axios.patch<CostumeSet>(
+    `${baseUrl}/${costumeSetId}`,
     newCostumeSet,
     authHeaderService.getAuthHeader()
   );
@@ -84,8 +113,11 @@ const updateSet = async (
 export default {
   getAll,
   getAllLikedPubOrOwn,
-  getById,
+  getAllOwned,
+  getPublicById,
+  getOwnedById,
   createSet,
+  editSet,
   deleteSet,
   likeSet,
   unlikeSet,

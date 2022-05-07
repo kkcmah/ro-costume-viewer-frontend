@@ -20,6 +20,9 @@ interface CreateSetFormProps {
   initialValues: CreateSetFormValues;
   hasCostumesInSet: boolean;
   isSubmitted: boolean;
+  // props if editing
+  handleEdit?: (formValues: CreateSetFormValues) => Promise<void>;
+  isEdit?: boolean;
 }
 
 const CreateSetForm = ({
@@ -27,10 +30,14 @@ const CreateSetForm = ({
   initialValues,
   hasCostumesInSet,
   isSubmitted,
+  // editing props
+  handleEdit,
+  isEdit,
 }: CreateSetFormProps) => {
   return (
     <Box mb={1} maxWidth="800px">
       <Formik
+        enableReinitialize
         initialValues={initialValues}
         validate={(values) => {
           const errors: { [field: string]: string } = {};
@@ -48,7 +55,13 @@ const CreateSetForm = ({
 
           return errors;
         }}
-        onSubmit={handleCreate}
+        onSubmit={(values) => {
+          if (isEdit && handleEdit) {
+            void handleEdit(values);
+          } else {
+            void handleCreate(values);
+          }
+        }}
       >
         {({ isValid, isSubmitting, dirty }) => (
           <Form>
@@ -86,7 +99,7 @@ const CreateSetForm = ({
                   !isValid || isSubmitting || !hasCostumesInSet || isSubmitted
                 }
               >
-                Create
+                {isEdit ? "Update" : "Create"}
               </Button>
               {dirty && isValid && !hasCostumesInSet && (
                 <Typography color="error">
@@ -95,7 +108,7 @@ const CreateSetForm = ({
               )}
               {isSubmitted && (
                 <Alert severity="success">
-                  Costume set created! Head on over to{" "}
+                  Costume set {isEdit ? "updated!" : "created!"} Head on over to{" "}
                   <Link to="/sets">Sets</Link> or{" "}
                   <Link to="/profile">Profile</Link>
                 </Alert>

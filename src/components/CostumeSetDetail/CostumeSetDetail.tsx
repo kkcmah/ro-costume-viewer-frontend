@@ -38,7 +38,7 @@ const CostumeSetDetail = ({ title }: CostumeSetDetailProps) => {
   const getCostumeSet = async (costumeSetId: string) => {
     try {
       setLoading(true);
-      const costumeSetApi = await costumeSetsService.getById(costumeSetId);
+      const costumeSetApi = await costumeSetsService.getPublicById(costumeSetId);
 
       if (!costumeSetApi) {
         setErrorMsg("Costume set unable to be found");

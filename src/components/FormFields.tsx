@@ -99,12 +99,21 @@ interface MySwitchProps {
   disabled?: boolean;
 }
 
+// https://stackoverflow.com/questions/68346727/formik-checkbox-value-not-showing-checked-for-a-true-value
+// in order to maintain the checked state when reinitializing, set checked=field value
 export const MySwitch = ({ name, label, id, ...props }: MySwitchProps) => {
   const [field] = useField(name);
   return (
     <div className="mb-8px">
       <FormControlLabel
-        control={<Switch id={id} {...field} {...props} />}
+        control={
+          <Switch
+            id={id}
+            checked={field.value as boolean}
+            {...field}
+            {...props}
+          />
+        }
         label={label}
       />
     </div>

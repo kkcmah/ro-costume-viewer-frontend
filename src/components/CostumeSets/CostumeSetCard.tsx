@@ -3,10 +3,13 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
+import PublicIcon from "@mui/icons-material/Public";
 import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import { CostumeSet } from "../../types";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
@@ -15,9 +18,15 @@ import { StateContext } from "../../state/state";
 interface CostumeSetCardProps {
   costumeSet: CostumeSet;
   toggleLikeSet: (costumeSetId: string) => Promise<void>;
+  // from profile my sets
+  isMySet?: boolean;
 }
 
-const CostumeSetCard = ({ costumeSet, toggleLikeSet }: CostumeSetCardProps) => {
+const CostumeSetCard = ({
+  costumeSet,
+  toggleLikeSet,
+  isMySet,
+}: CostumeSetCardProps) => {
   const [state] = useContext(StateContext);
 
   const numOfCostumesToShow = 12;
@@ -29,6 +38,10 @@ const CostumeSetCard = ({ costumeSet, toggleLikeSet }: CostumeSetCardProps) => {
       return desc.slice(0, maxLength) + "...";
     }
     return desc;
+  };
+
+  const handleDelete = () => {
+    console.log("del", costumeSet);
   };
 
   const temp = [3, 234, 52, 35, 2, 3, 12, 123, 123, 124, 124, 124, 124];
@@ -43,6 +56,11 @@ const CostumeSetCard = ({ costumeSet, toggleLikeSet }: CostumeSetCardProps) => {
       <CardHeader
         title={costumeSet.name}
         subheader={`created by: ${costumeSet.owner.username}`}
+        action={
+          isMySet && (
+            <PublicIcon color={costumeSet.isPublic ? "primary" : "disabled"} />
+          )
+        }
       />
       <CardContent>
         <Grid
@@ -82,6 +100,16 @@ const CostumeSetCard = ({ costumeSet, toggleLikeSet }: CostumeSetCardProps) => {
         <Typography variant="body2" mr={"auto"}>
           {costumeSet.likes}
         </Typography>
+        {isMySet && (
+          <Typography mr="auto">
+            <IconButton component={Link} to={`/sets/edit/${costumeSet.id}`}>
+              <EditIcon color="primary" />
+            </IconButton>
+            <IconButton onClick={handleDelete}>
+              <DeleteIcon color="error" />
+            </IconButton>
+          </Typography>
+        )}
         <Button size="small" component={Link} to={`/sets/${costumeSet.id}`}>
           Details
         </Button>

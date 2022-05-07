@@ -1,4 +1,4 @@
-import { ChangeEvent, SyntheticEvent } from "react";
+import { ChangeEvent, useState, SyntheticEvent } from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
@@ -8,25 +8,26 @@ import FormControl from "@mui/material/FormControl";
 import SearchIcon from "@mui/icons-material/Search";
 
 interface CSSearchFormProps {
-  name: string;
-  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  handleSearch: (event: SyntheticEvent) => void;
+  handleSearch: (event: SyntheticEvent, name: string) => void;
   loading: boolean;
 }
 
-const CSSearchForm = ({
-  name,
-  handleChange,
-  handleSearch,
-  loading,
-}: CSSearchFormProps) => {
+const CSSearchForm = ({ handleSearch, loading }: CSSearchFormProps) => {
+  const [name, setName] = useState<string>("");
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
+
   return (
     <Box
       component="form"
       sx={{ display: "flex", justifyContent: "end" }}
       noValidate
       autoComplete="off"
-      onSubmit={handleSearch}
+      onSubmit={(e: SyntheticEvent) => {
+        handleSearch(e, name);
+      }}
     >
       <FormControl variant="standard">
         <InputLabel htmlFor="cs-search-name">Search Name</InputLabel>
@@ -39,7 +40,11 @@ const CSSearchForm = ({
           disabled={loading}
           endAdornment={
             <InputAdornment position="end">
-              <IconButton aria-label="search name" onClick={handleSearch}>
+              <IconButton
+                aria-label="search name"
+                disabled={loading}
+                onClick={(e: SyntheticEvent) => handleSearch(e, name)}
+              >
                 <SearchIcon />
               </IconButton>
             </InputAdornment>

@@ -1,10 +1,4 @@
-import {
-  useEffect,
-  useState,
-  useContext,
-  ChangeEvent,
-  SyntheticEvent,
-} from "react";
+import { useEffect, useState, useContext, SyntheticEvent } from "react";
 import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
 import Stack from "@mui/material/Stack";
@@ -29,17 +23,18 @@ interface CostumeSetsProps {
   title: string;
   // profile related props
   isProfile?: boolean;
+  isMySets?: boolean;
 }
 
-const CostumeSets = ({ title, isProfile }: CostumeSetsProps) => {
+const CostumeSets = ({ title, isProfile, isMySets }: CostumeSetsProps) => {
   useTitle(title);
   const [state, dispatch] = useContext(StateContext);
   const [loading, setLoading] = useState<boolean>(true);
   const [costumeSets, setCostumeSets] = useState<CostumeSet[]>([]);
-  const { setErrorMsg, ...notif } = useAlertNotification();
+  const { setErrorMsg, setSuccessMsg, closeNotif, isErr, ...notif } =
+    useAlertNotification();
   const [count, setCount] = useState<number>(-1);
 
-  const [name, setName] = useState<string>("");
   const [prevSearchName, setPrevSearchName] = useState<string>("");
   const [loadingLikeClick, setLoadingLikeClick] = useState<boolean>(false);
 
@@ -59,6 +54,8 @@ const CostumeSets = ({ title, isProfile }: CostumeSetsProps) => {
       };
       if (isProfile) {
         response = await costumeSetsService.getAllLikedPubOrOwn(params);
+      } else if (isMySets) {
+        response = await costumeSetsService.getAllOwned(params);
       } else {
         response = await costumeSetsService.getAll(params);
       }
@@ -78,14 +75,13 @@ const CostumeSets = ({ title, isProfile }: CostumeSetsProps) => {
     }
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-  };
-
-  const handleSearch = (event: SyntheticEvent) => {
+  const handleSearch = (event: SyntheticEvent, name: string) => {
     event.preventDefault();
-    if (loading) {
+    if (loading || prevSearchName === name) {
+      setSuccessMsg(`Already showing results for: ${name}`);
       return;
+    } else if (!isErr) {
+      closeNotif();
     }
     const params: CostumeSetsPagedParams = {
       name,
@@ -150,7 +146,11 @@ const CostumeSets = ({ title, isProfile }: CostumeSetsProps) => {
   return (
     <>
       {loading && <LinearProgress />}
-      <AlertNotification {...notif}></AlertNotification>
+      <AlertNotification
+        isErr={isErr}
+        closeNotif={closeNotif}
+        {...notif}
+      ></AlertNotification>
       <Stack
         direction="row"
         justifyContent={state.user && !isProfile ? "space-between" : "end"}
@@ -167,8 +167,6 @@ const CostumeSets = ({ title, isProfile }: CostumeSetsProps) => {
           </Button>
         )}
         <CSSearchForm
-          name={name}
-          handleChange={handleChange}
           handleSearch={handleSearch}
           loading={loading}
         ></CSSearchForm>
@@ -184,6 +182,7 @@ const CostumeSets = ({ title, isProfile }: CostumeSetsProps) => {
             <CostumeSetCard
               costumeSet={cosSet}
               toggleLikeSet={toggleLikeSet}
+              isMySet={isMySets}
             ></CostumeSetCard>
           </Grid>
         ))}
