@@ -73,7 +73,7 @@ const CreateSetForm = ({
               type="text"
               label="Name"
               required={true}
-              disabled={isSubmitted}
+              disabled={isSubmitted || disableButtons}
             />
             <MyTextField
               id="create-description-input"
@@ -82,13 +82,13 @@ const CreateSetForm = ({
               label="Description"
               minRows={3}
               multiline={true}
-              disabled={isSubmitted}
+              disabled={isSubmitted || disableButtons}
             />
             <MySwitch
               name="isPublic"
               label="Public"
               id="create-public-switch"
-              disabled={isSubmitted}
+              disabled={isSubmitted || disableButtons}
             />
 
             <Stack direction="row" spacing={1} alignItems="center">
@@ -107,11 +107,15 @@ const CreateSetForm = ({
               >
                 {isEdit ? "Update" : "Create"}
               </Button>
-              {dirty && isValid && !hasCostumesInSet && (
-                <Typography color="error">
-                  Select at least one costume from below to include in set
-                </Typography>
-              )}
+              {dirty &&
+                isValid &&
+                !hasCostumesInSet &&
+                !disableButtons &&
+                !isSubmitted && (
+                  <Typography color="error">
+                    Select at least one costume from below to include in set
+                  </Typography>
+                )}
               {isSubmitted && (
                 <Alert severity="success">
                   Costume set {isEdit ? "updated!" : "created!"} Head on over to{" "}

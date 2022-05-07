@@ -176,10 +176,11 @@ const CreateCostumeSet = ({
         <Typography mb={1} component="div" display="flex" justifyContent="end">
           <Button
             color="error"
+            variant="outlined"
             onClick={handleClickDelete}
             disabled={disableButtons}
           >
-            Delete
+            Delete Set
           </Button>
         </Typography>
       )}
@@ -193,6 +194,14 @@ const CreateCostumeSet = ({
           isSubmitted={isSubmitted}
           disableButtons={disableButtons}
         ></CreateSetForm>
+        {isDeleted && (
+          <Alert severity="error">
+            {DELETED_MSG}
+            <Typography>
+              Head to <Link to="/profile">Profile</Link>
+            </Typography>
+          </Alert>
+        )}
         <CostumesToAddList
           costumesInSet={costumesInSet}
           handleRemove={handleRemove}
