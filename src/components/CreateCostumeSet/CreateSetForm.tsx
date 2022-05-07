@@ -23,6 +23,7 @@ interface CreateSetFormProps {
   // props if editing
   handleEdit?: (formValues: CreateSetFormValues) => Promise<void>;
   isEdit?: boolean;
+  disableButtons: boolean;
 }
 
 const CreateSetForm = ({
@@ -33,6 +34,7 @@ const CreateSetForm = ({
   // editing props
   handleEdit,
   isEdit,
+  disableButtons,
 }: CreateSetFormProps) => {
   return (
     <Box mb={1} maxWidth="800px">
@@ -96,7 +98,11 @@ const CreateSetForm = ({
                 variant="outlined"
                 type="submit"
                 disabled={
-                  !isValid || isSubmitting || !hasCostumesInSet || isSubmitted
+                  !isValid ||
+                  isSubmitting ||
+                  !hasCostumesInSet ||
+                  isSubmitted ||
+                  disableButtons
                 }
               >
                 {isEdit ? "Update" : "Create"}

@@ -1,4 +1,6 @@
 import { useContext, useEffect, useState } from "react";
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -12,6 +14,8 @@ import costumeSetsService from "../../services/costumeSetsService";
 import useAlertNotification from "../AlertNotification/useAlertNotification";
 import AlertNotification from "../AlertNotification/AlertNotification";
 import { useTitle } from "../../hooks/useTitle";
+import DeleteCostumeSetDialog from "../DeleteCostumeSetDialog/DeleteCostumeSetDialog";
+import { Link } from "react-router-dom";
 
 interface CreateCostumeSetProps {
   title: string;
@@ -31,7 +35,8 @@ const CreateCostumeSet = ({
   const [state] = useContext(StateContext);
   // instead of handling costumeIds in form
   const [costumesInSet, setCostumesInSet] = useState<Costume[]>([]);
-  const { setErrorMsg, ...notif } = useAlertNotification();
+  const { setErrorMsg, setSuccessMsg, closeNotif, isErr, msg } =
+    useAlertNotification();
   const [loading, setLoading] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [initialValues, setInitialValues] = useState<CreateSetFormValues>({
@@ -39,8 +44,12 @@ const CreateCostumeSet = ({
     description: "",
     isPublic: false,
   });
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
 
   const hasCostumesInSet = costumesInSet.length > 0 ? true : false;
+  const DELETED_MSG = "Alas, I've been deleted :(";
+  const disableButtons = isDeleted || loading || false;
 
   useEffect(() => {
     if (isEdit && costumeSet) {
@@ -96,7 +105,7 @@ const CreateCostumeSet = ({
 
   // note to future: using same type as create because I made all field editable
   const handleEdit = async (formValues: CreateSetFormValues) => {
-    if (!costumeSet) return;
+    if (!costumeSet || disableButtons) return;
     try {
       setLoading(true);
       const editedCostumeSet: NewCostumeSet = {
@@ -114,6 +123,35 @@ const CreateCostumeSet = ({
     }
   };
 
+  const handleClickDelete = () => {
+    if (!disableButtons) {
+      setOpenDelete(true);
+    }
+  };
+
+  const handleCloseDeleteDialog = (deleteSet: boolean) => {
+    setOpenDelete(false);
+    if (deleteSet) {
+      void deleteCostumeSet();
+    }
+  };
+
+  const deleteCostumeSet = async () => {
+    if (!costumeSet || disableButtons) {
+      return;
+    }
+    try {
+      setLoading(true);
+      const res = await costumeSetsService.deleteSet(costumeSet.id);
+      setSuccessMsg(res.message);
+      setIsDeleted(true);
+    } catch (error) {
+      setErrorMsg(formatErrorAsString(error));
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (!state.user) return <h2>You must be logged in to create a set.</h2>;
   return (
     <>
@@ -121,8 +159,30 @@ const CreateCostumeSet = ({
       <Typography mb={1} variant="h5">
         {pageTitle}
       </Typography>
-      <AlertNotification {...notif}></AlertNotification>
-      {/* TODO put some sort of delete set button here if editing*/}
+      <AlertNotification
+        isErr={isErr}
+        closeNotif={closeNotif}
+        msg={msg}
+      ></AlertNotification>
+      {isDeleted && !msg && (
+        <Alert severity="error">
+          {DELETED_MSG}
+          <Typography>
+            Head to <Link to="/profile">Profile</Link>
+          </Typography>
+        </Alert>
+      )}
+      {isEdit && (
+        <Typography mb={1} component="div" display="flex" justifyContent="end">
+          <Button
+            color="error"
+            onClick={handleClickDelete}
+            disabled={disableButtons}
+          >
+            Delete
+          </Button>
+        </Typography>
+      )}
       <Paper sx={{ marginBottom: 1 }}>
         <CreateSetForm
           handleCreate={handleCreate}
@@ -131,6 +191,7 @@ const CreateCostumeSet = ({
           initialValues={initialValues}
           hasCostumesInSet={hasCostumesInSet}
           isSubmitted={isSubmitted}
+          disableButtons={disableButtons}
         ></CreateSetForm>
         <CostumesToAddList
           costumesInSet={costumesInSet}
@@ -142,6 +203,13 @@ const CreateCostumeSet = ({
         handleCosCheckChange={handleCosCheckChange}
         costumesInSet={costumesInSet}
       ></CostumeList>
+      {isEdit && costumeSet && (
+        <DeleteCostumeSetDialog
+          openDelete={openDelete}
+          onClose={handleCloseDeleteDialog}
+          costumeSet={costumeSet}
+        ></DeleteCostumeSetDialog>
+      )}
     </>
   );
 };
