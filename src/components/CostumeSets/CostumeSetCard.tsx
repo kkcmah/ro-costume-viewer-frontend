@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { memo, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
@@ -21,30 +21,46 @@ import costumeSetsService from "../../services/costumeSetsService";
 import AlertNotification from "../AlertNotification/AlertNotification";
 import useAlertNotification from "../AlertNotification/useAlertNotification";
 import { formatErrorAsString } from "../../services/helpersService";
+import { setLikedSets } from "../../state/reducer";
+
+const DELETED_MSG = "Alas, I've been deleted :(";
+const numOfCostumesToShow = 12;
 
 interface CostumeSetCardProps {
   costumeSet: CostumeSet;
-  toggleLikeSet: (costumeSetId: string) => Promise<void>;
   // from profile my sets
   isMySet?: boolean;
 }
 
-const CostumeSetCard = ({
-  costumeSet,
-  toggleLikeSet,
-  isMySet,
-}: CostumeSetCardProps) => {
-  const [state] = useContext(StateContext);
-
+const CostumeSetCard = ({ costumeSet, isMySet }: CostumeSetCardProps) => {
+  const [state, dispatch] = useContext(StateContext);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const { setErrorMsg, setSuccessMsg, closeNotif, isErr, msg } =
     useAlertNotification();
+  const [loadingLikeClick, setLoadingLikeClick] = useState<boolean>(false);
+  const [liked, setLiked] = useState<boolean>(false);
+  const [initialLiked, setInitialLiked] = useState<boolean>(false);
 
-  const numOfCostumesToShow = 12;
+  useEffect(() => {
+    if (state.user) {
+      const like = state.user.likedCostumeSets.includes(costumeSet.id);
+      setLiked(like);
+      setInitialLiked(like);
+    }
+  }, []);
+
   const disableButtons = isDeleted || loading || false;
-  const DELETED_MSG = "Alas, I've been deleted :(";
+
+  const numLikesToDisplay = (() => {
+    if (initialLiked && !liked) {
+      return costumeSet.likes - 1;
+    } else if (!initialLiked && liked) {
+      return costumeSet.likes + 1;
+    }
+    return costumeSet.likes;
+  })();
 
   // truncate the description and suffix it with ... if its too long
   const descToShow = (desc: string): string => {
@@ -76,6 +92,40 @@ const CostumeSetCard = ({
       setErrorMsg(formatErrorAsString(error));
     } finally {
       setLoading(false);
+    }
+  };
+
+  const updateLikedSets = async (costumeSetId: string, newLiked: boolean) => {
+    if (!state.user) {
+      return;
+    }
+    setLiked(newLiked);
+
+    let actualLikedSets;
+    if (newLiked) {
+      actualLikedSets = await costumeSetsService.likeSet(costumeSetId);
+    } else {
+      actualLikedSets = await costumeSetsService.unlikeSet(costumeSetId);
+    }
+
+    dispatch(setLikedSets(actualLikedSets));
+  };
+
+  const toggleLikeSet = async (costumeSetId: string) => {
+    if (!state.user) {
+      setErrorMsg("Login to like sets.");
+      return;
+    }
+    if (loadingLikeClick) {
+      return;
+    }
+    try {
+      setLoadingLikeClick(true);
+      await updateLikedSets(costumeSetId, !liked);
+    } catch (error) {
+      setErrorMsg(formatErrorAsString(error));
+    } finally {
+      setLoadingLikeClick(false);
     }
   };
 
@@ -138,17 +188,11 @@ const CostumeSetCard = ({
           {disableButtons ? (
             <FavoriteIcon color="disabled"></FavoriteIcon>
           ) : (
-            <FavoriteIcon
-              color={
-                state.user?.likedCostumeSets.includes(costumeSet.id)
-                  ? "error"
-                  : "inherit"
-              }
-            />
+            <FavoriteIcon color={liked ? "error" : "inherit"} />
           )}
         </IconButton>
         <Typography variant="body2" mr={"auto"}>
-          {costumeSet.likes}
+          {numLikesToDisplay}
         </Typography>
         {isMySet && (
           <Typography mr="auto">
@@ -183,4 +227,4 @@ const CostumeSetCard = ({
   );
 };
 
-export default CostumeSetCard;
+export default memo(CostumeSetCard);

@@ -16,7 +16,6 @@ import useAlertNotification from "../AlertNotification/useAlertNotification";
 import CSSearchForm from "./CSSearchForm";
 import { StateContext } from "../../state/state";
 import CostumeSetCard from "./CostumeSetCard";
-import { setLikedSets } from "../../state/reducer";
 import { useTitle } from "../../hooks/useTitle";
 
 interface CostumeSetsProps {
@@ -28,7 +27,7 @@ interface CostumeSetsProps {
 
 const CostumeSets = ({ title, isProfile, isMySets }: CostumeSetsProps) => {
   useTitle(title);
-  const [state, dispatch] = useContext(StateContext);
+  const [state] = useContext(StateContext);
   const [loading, setLoading] = useState<boolean>(true);
   const [costumeSets, setCostumeSets] = useState<CostumeSet[]>([]);
   const { setErrorMsg, setSuccessMsg, closeNotif, isErr, ...notif } =
@@ -36,7 +35,6 @@ const CostumeSets = ({ title, isProfile, isMySets }: CostumeSetsProps) => {
   const [count, setCount] = useState<number>(-1);
 
   const [prevSearchName, setPrevSearchName] = useState<string>("");
-  const [loadingLikeClick, setLoadingLikeClick] = useState<boolean>(false);
 
   useEffect(() => {
     void getCostumeSets();
@@ -104,45 +102,6 @@ const CostumeSets = ({ title, isProfile, isMySets }: CostumeSetsProps) => {
     void getCostumeSets(params, true);
   };
 
-  const updateLikeSetState = (costumeSetId: string, like: boolean) => {
-    const inc = like ? 1 : -1;
-    setCostumeSets((prev) => {
-      return prev.map((set) => {
-        if (set.id === costumeSetId) {
-          return { ...set, likes: set.likes + inc };
-        } else {
-          return set;
-        }
-      });
-    });
-  };
-
-  const toggleLikeSet = async (costumeSetId: string) => {
-    if (!state.user) {
-      setErrorMsg("Login to like sets.");
-      return;
-    }
-    if (loadingLikeClick) {
-      return;
-    }
-    try {
-      setLoadingLikeClick(true);
-      if (state.user.likedCostumeSets.includes(costumeSetId)) {
-        const likedSets = await costumeSetsService.unlikeSet(costumeSetId);
-        dispatch(setLikedSets(likedSets));
-        updateLikeSetState(costumeSetId, false);
-      } else {
-        const likedSets = await costumeSetsService.likeSet(costumeSetId);
-        dispatch(setLikedSets(likedSets));
-        updateLikeSetState(costumeSetId, true);
-      }
-    } catch (error) {
-      setErrorMsg(formatErrorAsString(error));
-    } finally {
-      setLoadingLikeClick(false);
-    }
-  };
-
   return (
     <>
       {loading && <LinearProgress />}
@@ -181,7 +140,6 @@ const CostumeSets = ({ title, isProfile, isMySets }: CostumeSetsProps) => {
           <Grid item xs={4} sm={4} md={4} key={ind}>
             <CostumeSetCard
               costumeSet={cosSet}
-              toggleLikeSet={toggleLikeSet}
               isMySet={isMySets}
             ></CostumeSetCard>
           </Grid>
