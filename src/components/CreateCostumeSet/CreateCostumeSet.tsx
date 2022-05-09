@@ -60,7 +60,7 @@ const CreateCostumeSet = ({
       });
       setCostumesInSet(costumeSet.costumes);
     }
-  }, []);
+  }, [costumeSet, isEdit]);
 
   const handleCosCheckChange = (costumeChanged: Costume) => {
     let found = false;

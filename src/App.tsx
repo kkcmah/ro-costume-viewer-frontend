@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Container } from "@material-ui/core";
 
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import CostumeList from "./components/CostumeList/CostumeList";
 import loginService from "./services/loginService";
 import Login from "./components/Login/Login";
@@ -19,9 +19,12 @@ import Profile from "./components/Profile/Profile";
 import CostumeSetDetail from "./components/CostumeSetDetail/CostumeSetDetail";
 import { APP_TITLE } from "./constants";
 import EditCostumeSet from "./components/EditCostumeSet/EditCostumeSet";
+import LoadingPage from "./components/LoadingPage/LoadingPage";
 
 const App = () => {
   const [state, dispatch] = useContext(StateContext);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [doneFromLP, setDoneFromLP] = useState<boolean>(false);
 
   useEffect(() => {
     const pingpong = async () => {
@@ -36,6 +39,7 @@ const App = () => {
 
     const loadUser = async () => {
       try {
+        setLoading(true);
         const user = await usersService.loadUserLocalStorage();
         if (user) {
           dispatch(setUser(user));
@@ -43,11 +47,27 @@ const App = () => {
       } catch (e) {
         loginService.logout();
         dispatch(setUser(null));
+      } finally {
+        setTimeout(() => {
+          setLoading(false);
+        }, 1500);
       }
     };
 
     void loadUser();
-  }, []);
+  }, [dispatch]);
+
+  const handleLPDoneClick = () => {
+    setDoneFromLP(true);
+  };
+
+  if (loading || !doneFromLP)
+    return (
+      <LoadingPage
+        loading={loading}
+        handleLPDoneClick={handleLPDoneClick}
+      ></LoadingPage>
+    );
 
   return (
     <div className="App">

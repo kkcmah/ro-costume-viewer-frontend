@@ -1,0 +1,68 @@
+.lp-page {
+  background: rgb(79, 96, 116);
+  background: radial-gradient(
+    circle,
+    rgba(79, 96, 116, 1) 0%,
+    rgba(2, 0, 36, 1) 100%,
+    rgba(70, 68, 152, 1) 100%,
+    rgba(71, 71, 161, 1) 100%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  position: absolute;
+  inset: 0;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+.lp-loading-area {
+  margin: 5vh auto 0;
+  color: rgba(207, 216, 211, 0.932);
+}
+
+.lp-countdown-btn-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.lp-btn {
+  background-color: rgba(207, 216, 211, 0.932);
+  height: 25px;
+  border-radius: 15%;
+}
+
+.lp-btn:hover {
+  background-color: rgb(175, 186, 180);
+  cursor: pointer;
+}
+
+#lp-new-icons-btn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.lp-icons-container {
+  /* fallback width, height, left, top if it's not set in code */
+  width: 200px;
+  height: 200px;
+  left: calc(50vw - 100px);
+  top: calc(50vh - 100px);
+  position: absolute;
+  animation: rotation 12s linear infinite;
+}
+
+.item {
+  position: absolute;
+  animation: rotation 12s linear infinite reverse;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}

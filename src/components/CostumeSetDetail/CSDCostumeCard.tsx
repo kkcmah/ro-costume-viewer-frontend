@@ -2,8 +2,8 @@ import {
   useState,
   SyntheticEvent,
   ChangeEvent,
-  createRef,
   useEffect,
+  useRef,
 } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -24,8 +24,7 @@ interface CSDCostumeCardProps {
 const CSDCostumeCard = ({ costume }: CSDCostumeCardProps) => {
   const [previewUrl, setPreviewUrl] = useState<string>();
   const [loop, setLoop] = useState<boolean>(true);
-  // using older version of ref instead of useRef b/c video doesn't work with new one
-  const video = createRef<HTMLVideoElement>();
+  const video = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     video.current?.load();

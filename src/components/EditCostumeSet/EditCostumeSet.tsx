@@ -27,6 +27,7 @@ const EditCostumeSet = ({ title }: EditCostumeSetProps) => {
     if (costumeSetId) {
       void getCostumeSet(costumeSetId);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getCostumeSet = async (costumeSetId: string) => {
