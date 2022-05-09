@@ -1,7 +1,7 @@
 import { Form, Formik } from "formik";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 
 import { StateContext } from "../../state/state";
 import { setUser } from "../../state/reducer";

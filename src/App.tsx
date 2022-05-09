@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Container } from "@material-ui/core";
+import Container from "@mui/material/Container";
 
 import { useContext, useEffect, useState } from "react";
 import CostumeList from "./components/CostumeList/CostumeList";
