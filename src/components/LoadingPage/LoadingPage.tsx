@@ -141,9 +141,9 @@ const LoadingPage = ({ loading, handleLPDoneClick }: LoadingPageProps) => {
         <h1>{loadingText}</h1>
         {!loading && (
           <>
-            <h2>{countdownText}</h2>
-            <div className="lp-countdown-btn-container">
-              <button className="lp-btn" onClick={handleWaitClick}>
+            <div className="lp-countdown-container">
+              <h2 className="lp-mr-10px">{countdownText}</h2>
+              <button className="lp-btn lp-mr-10px" onClick={handleWaitClick}>
                 Stop
               </button>
               <button className="lp-btn" onClick={handleLPDoneClick}>

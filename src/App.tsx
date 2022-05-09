@@ -61,74 +61,80 @@ const App = () => {
     setDoneFromLP(true);
   };
 
-  if (loading || !doneFromLP)
-    return (
-      <LoadingPage
-        loading={loading}
-        handleLPDoneClick={handleLPDoneClick}
-      ></LoadingPage>
-    );
-
   return (
-    <div className="App">
-      <Router>
-        <Container>
-          <Header></Header>
-          <Routes>
-            <Route
-              path="/"
-              element={<CostumeList title={APP_TITLE + "Home"} />}
-            />
-            <Route
-              path="/login"
-              element={<Login title={APP_TITLE + "Login"} />}
-            />
-            <Route
-              path="/signup"
-              element={<SignUp title={APP_TITLE + "Sign Up"} />}
-            />
-            <Route
-              path="/logout"
-              element={<Logout title={APP_TITLE + "Logout"} />}
-            />
-            <Route
-              path="/sets"
-              element={<CostumeSets title={APP_TITLE + "Sets"} />}
-            />
-            <Route
-              path="/sets/:costumeSetId"
-              element={<CostumeSetDetail title={APP_TITLE + "Set Detail"} />}
-            />
-            <Route
-              path="/sets/create"
-              element={<CreateCostumeSet title={APP_TITLE + "Create Set"} />}
-            />
-            <Route
-              path="/sets/edit/:costumeSetId"
-              element={<EditCostumeSet title={APP_TITLE + "Edit Set"} />}
-            />
-            <Route
-              path="/profile"
-              element={<Profile title={APP_TITLE + "Profile"} />}
-            />
-            <Route
-              path="/testnav"
-              element={
-                state.user ? (
-                  <Navigate to="/"></Navigate>
-                ) : (
-                  <Logout title={APP_TITLE + "Logout"}></Logout>
-                )
-              }
-            ></Route>
-            <Route
-              path="/*"
-              element={<NoMatchPage title={APP_TITLE + "404"} />}
-            />
-          </Routes>
-        </Container>
-      </Router>
-    </div>
+    <>
+      {!doneFromLP && (
+        <LoadingPage
+          loading={loading}
+          handleLPDoneClick={handleLPDoneClick}
+        ></LoadingPage>
+      )}
+      {!loading && (
+        <div className="App" hidden={!doneFromLP}>
+          <Router>
+            <Container>
+              <Header></Header>
+              <Routes>
+                <Route
+                  path="/"
+                  element={<CostumeList title={APP_TITLE + "Home"} />}
+                />
+                <Route
+                  path="/login"
+                  element={<Login title={APP_TITLE + "Login"} />}
+                />
+                <Route
+                  path="/signup"
+                  element={<SignUp title={APP_TITLE + "Sign Up"} />}
+                />
+                <Route
+                  path="/logout"
+                  element={<Logout title={APP_TITLE + "Logout"} />}
+                />
+                <Route
+                  path="/sets"
+                  element={<CostumeSets title={APP_TITLE + "Sets"} />}
+                />
+                <Route
+                  path="/sets/:costumeSetId"
+                  element={
+                    <CostumeSetDetail title={APP_TITLE + "Set Detail"} />
+                  }
+                />
+                <Route
+                  path="/sets/create"
+                  element={
+                    <CreateCostumeSet title={APP_TITLE + "Create Set"} />
+                  }
+                />
+                <Route
+                  path="/sets/edit/:costumeSetId"
+                  element={<EditCostumeSet title={APP_TITLE + "Edit Set"} />}
+                />
+                <Route
+                  path="/profile"
+                  element={<Profile title={APP_TITLE + "Profile"} />}
+                />
+                <Route
+                  path="/testnav"
+                  element={
+                    state.user ? (
+                      <Navigate to="/"></Navigate>
+                    ) : (
+                      <Logout title={APP_TITLE + "Logout"}></Logout>
+                    )
+                  }
+                ></Route>
+                <Route
+                  path="/*"
+                  element={<NoMatchPage title={APP_TITLE + "404"} />}
+                />
+              </Routes>
+            </Container>
+          </Router>
+        </div>
+      )}
+    </>
   );
 };
 

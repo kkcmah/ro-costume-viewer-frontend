@@ -20,14 +20,18 @@
   color: rgba(207, 216, 211, 0.932);
 }
 
-.lp-countdown-btn-container {
+.lp-mr-10px {
+  margin-right: 10px;
+}
+
+.lp-countdown-container {
   display: flex;
-  justify-content: space-evenly;
+  align-items: center;
 }
 
 .lp-btn {
   background-color: rgba(207, 216, 211, 0.932);
-  height: 25px;
+  height: 35px;
   border-radius: 15%;
 }
 
