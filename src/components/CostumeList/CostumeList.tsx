@@ -55,6 +55,7 @@ const CostumeList = ({
       setTitle(title + " " + searchParams.toString());
     }
     void getCostumes(getURLParams());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, depArr);
 
   const getURLParams = (): CostumeURLSearchParams => {

@@ -38,6 +38,7 @@ const CostumeSets = ({ title, isProfile, isMySets }: CostumeSetsProps) => {
 
   useEffect(() => {
     void getCostumeSets();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getCostumeSets = async (

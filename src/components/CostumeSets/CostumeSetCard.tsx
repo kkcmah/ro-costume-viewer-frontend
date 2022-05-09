@@ -49,6 +49,7 @@ const CostumeSetCard = ({ costumeSet, isMySet }: CostumeSetCardProps) => {
       setLiked(like);
       setInitialLiked(like);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const disableButtons = isDeleted || loading || false;

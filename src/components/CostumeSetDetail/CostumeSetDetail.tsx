@@ -33,12 +33,15 @@ const CostumeSetDetail = ({ title }: CostumeSetDetailProps) => {
     if (costumeSetId) {
       void getCostumeSet(costumeSetId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getCostumeSet = async (costumeSetId: string) => {
     try {
       setLoading(true);
-      const costumeSetApi = await costumeSetsService.getPublicById(costumeSetId);
+      const costumeSetApi = await costumeSetsService.getPublicById(
+        costumeSetId
+      );
 
       if (!costumeSetApi) {
         setErrorMsg("Costume set unable to be found");
