@@ -1,7 +1,9 @@
 import { useContext, useEffect, useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
+import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { StateContext } from "../../state/state";
@@ -15,7 +17,6 @@ import useAlertNotification from "../AlertNotification/useAlertNotification";
 import AlertNotification from "../AlertNotification/AlertNotification";
 import { useTitle } from "../../hooks/useTitle";
 import DeleteCostumeSetDialog from "../DeleteCostumeSetDialog/DeleteCostumeSetDialog";
-import { Link } from "react-router-dom";
 
 interface CreateCostumeSetProps {
   title: string;
@@ -168,7 +169,10 @@ const CreateCostumeSet = ({
         <Alert severity="error">
           {DELETED_MSG}
           <Typography>
-            Head to <Link to="/profile">Profile</Link>
+            Head to{" "}
+            <Link component={RouterLink} to="/profile">
+              Profile
+            </Link>
           </Typography>
         </Alert>
       )}
@@ -198,7 +202,10 @@ const CreateCostumeSet = ({
           <Alert severity="error">
             {DELETED_MSG}
             <Typography>
-              Head to <Link to="/profile">Profile</Link>
+              Head to{" "}
+              <Link component={RouterLink} to="/profile">
+                Profile
+              </Link>
             </Typography>
           </Alert>
         )}

@@ -12,7 +12,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+
 import { Costume } from "../../types";
 import CostumePreviewDialog from "../CostumePreviewDialog/CostumePreviewDialog";
 import { StateContext } from "../../state/state";
@@ -138,7 +140,7 @@ const CostumesTable = ({
                         />
                       )}
                       <Box mr={1} className="costume costume-18740"></Box>
-                      <div>{cos.name}</div>
+                      <Typography mr={1}>{cos.name}</Typography>
                       {cos.previewUrl && (
                         <>
                           <Box

@@ -1,5 +1,6 @@
 import { useContext, useState, SyntheticEvent } from "react";
 import Alert from "@mui/material/Alert";
+import Link from "@mui/material/Link";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -7,7 +8,7 @@ import Box from "@mui/material/Box";
 import { StateContext } from "../../state/state";
 import { useTitle } from "../../hooks/useTitle";
 import CostumeList from "../CostumeList/CostumeList";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import CostumeSets from "../CostumeSets/CostumeSets";
 
 interface ProfileProps {
@@ -80,7 +81,10 @@ const Profile = ({ title }: ProfileProps) => {
             {state.user.favCostumes.length === 0 && (
               <Alert severity="info">
                 Looks like you do not have any favorite costumes :(. Head{" "}
-                <Link to="/">Home</Link> to add some.
+                <Link component={RouterLink} to="/">
+                  Home
+                </Link>{" "}
+                to add some.
               </Alert>
             )}
             <CostumeList isProfile={true}></CostumeList>
@@ -96,7 +100,10 @@ const Profile = ({ title }: ProfileProps) => {
             {state.user.likedCostumeSets.length === 0 && (
               <Alert severity="info">
                 Looks like you do not have any liked costume sets :(. Head to{" "}
-                <Link to="/sets">Sets</Link> to add some.
+                <Link component={RouterLink} to="/sets">
+                  Sets
+                </Link>{" "}
+                to add some.
               </Alert>
             )}
             <CostumeSets title={title} isProfile={true}></CostumeSets>

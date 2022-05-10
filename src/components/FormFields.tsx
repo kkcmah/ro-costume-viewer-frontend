@@ -108,6 +108,7 @@ export const MySwitch = ({ name, label, id, ...props }: MySwitchProps) => {
       <FormControlLabel
         control={
           <Switch
+            color="info"
             id={id}
             checked={field.value as boolean}
             {...field}

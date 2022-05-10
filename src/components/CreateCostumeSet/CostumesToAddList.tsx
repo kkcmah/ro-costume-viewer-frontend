@@ -72,10 +72,9 @@ const CostumesToAddList = ({
                       <IconButton
                         edge="end"
                         aria-label="remove"
-                        color="error"
                         onClick={() => handleRemove(costume.id)}
                       >
-                        <DeleteIcon />
+                        <DeleteIcon htmlColor="red" />
                       </IconButton>
                     </>
                   }

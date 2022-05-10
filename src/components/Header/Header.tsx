@@ -42,12 +42,12 @@ const Header = () => {
             Sets
           </Button>
           <Box mr={1} display="flex" alignItems="center">
-            <DarkModeIcon htmlColor="white" />
+            <DarkModeIcon fontSize="small" htmlColor="white" />
             <Switch
               color="default"
               onChange={colorMode.toggleColorMode}
             ></Switch>
-            <LightModeIcon htmlColor="yellow" />
+            <LightModeIcon fontSize="small" htmlColor="yellow" />
           </Box>
           {!state.user && (
             <>

@@ -2,9 +2,10 @@ import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { Form, Formik } from "formik";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { MySwitch, MyTextField } from "../FormFields";
 
 export interface CreateSetFormValues {
@@ -119,8 +120,13 @@ const CreateSetForm = ({
               {isSubmitted && (
                 <Alert severity="success">
                   Costume set {isEdit ? "updated!" : "created!"} Head on over to{" "}
-                  <Link to="/sets">Sets</Link> or{" "}
-                  <Link to="/profile">Profile</Link>
+                  <Link component={RouterLink} to="/sets">
+                    Sets
+                  </Link>{" "}
+                  or{" "}
+                  <Link component={RouterLink} to="/profile">
+                    Profile
+                  </Link>
                 </Alert>
               )}
             </Stack>

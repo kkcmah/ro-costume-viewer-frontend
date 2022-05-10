@@ -1,7 +1,8 @@
 import { Form, Formik } from "formik";
 import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
+import Link from "@mui/material/Link";
 
 import { StateContext } from "../../state/state";
 import { setUser } from "../../state/reducer";
@@ -85,7 +86,10 @@ const Login = ({ title }: LoginProps) => {
         )}
       </Formik>
       <div>
-        No account? <Link to="/signup">Sign Up</Link>
+        No account?{" "}
+        <Link component={RouterLink} to="/signup">
+          Sign Up
+        </Link>
       </div>
     </div>
   );
