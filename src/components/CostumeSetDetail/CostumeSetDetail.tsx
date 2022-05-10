@@ -17,9 +17,11 @@ import { useTitle } from "../../hooks/useTitle";
 
 interface CostumeSetDetailProps {
   title: string;
+  // from profile
+  owned?: boolean;
 }
 
-const CostumeSetDetail = ({ title }: CostumeSetDetailProps) => {
+const CostumeSetDetail = ({ title, owned }: CostumeSetDetailProps) => {
   useTitle(title);
   const { costumeSetId } = useParams();
   const { setErrorMsg, ...notif } = useAlertNotification();
@@ -39,9 +41,12 @@ const CostumeSetDetail = ({ title }: CostumeSetDetailProps) => {
   const getCostumeSet = async (costumeSetId: string) => {
     try {
       setLoading(true);
-      const costumeSetApi = await costumeSetsService.getPublicById(
-        costumeSetId
-      );
+      let costumeSetApi;
+      if (owned) {
+        costumeSetApi = await costumeSetsService.getOwnedById(costumeSetId);
+      } else {
+        costumeSetApi = await costumeSetsService.getPublicById(costumeSetId);
+      }
 
       if (!costumeSetApi) {
         setErrorMsg("Costume set unable to be found");

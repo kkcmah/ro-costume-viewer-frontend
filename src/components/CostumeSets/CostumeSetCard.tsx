@@ -230,7 +230,7 @@ const CostumeSetCard = ({ costumeSet, isMySet }: CostumeSetCardProps) => {
           color="info"
           disabled={disableButtons}
           component={Link}
-          to={`/sets/${costumeSet.id}`}
+          to={isMySet ? `/sets/owned/${costumeSet.id}` : `/sets/${costumeSet.id}`}
         >
           Details
         </Button>

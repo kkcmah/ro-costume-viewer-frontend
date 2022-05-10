@@ -100,6 +100,15 @@ const App = () => {
                   }
                 />
                 <Route
+                  path="/sets/owned/:costumeSetId"
+                  element={
+                    <CostumeSetDetail
+                      title={APP_TITLE + "Set Detail"}
+                      owned={true}
+                    />
+                  }
+                />
+                <Route
                   path="/sets/create"
                   element={
                     <CreateCostumeSet title={APP_TITLE + "Create Set"} />
