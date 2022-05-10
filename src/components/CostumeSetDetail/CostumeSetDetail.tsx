@@ -106,15 +106,17 @@ const CostumeSetDetail = ({ title }: CostumeSetDetailProps) => {
           <Typography>
             <IconButton
               disabled={!state.user}
-              color={
-                state.user?.likedCostumeSets.includes(costumeSet.id)
-                  ? "error"
-                  : "default"
-              }
               aria-label="toggle like"
               onClick={() => void toggleLikeSet()}
             >
-              <FavoriteIcon /> {likes}
+              <FavoriteIcon
+                htmlColor={
+                  state.user?.likedCostumeSets.includes(costumeSet.id)
+                    ? "red"
+                    : undefined
+                }
+              />{" "}
+              {likes}
             </IconButton>
           </Typography>
         </Grid>

@@ -180,15 +180,16 @@ const CostumesTable = ({
                   {state.user && (
                     <TableCell>
                       <IconButton
-                        color={
-                          state.user.favCostumes.includes(cos.id)
-                            ? "error"
-                            : "default"
-                        }
                         aria-label="toggle favorite"
                         onClick={() => void toggleFavCostume(cos.id)}
                       >
-                        <FavoriteIcon />
+                        <FavoriteIcon
+                          htmlColor={
+                            state.user.favCostumes.includes(cos.id)
+                              ? "red"
+                              : undefined
+                          }
+                        />
                       </IconButton>
                     </TableCell>
                   )}

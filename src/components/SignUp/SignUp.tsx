@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { Form, Formik, FormikHelpers } from "formik";
 import Button from "@mui/material/Button";
+import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
 
 import { UserLoginCreds } from "../../types";
 import { MyTextField } from "../FormFields";
@@ -41,15 +43,20 @@ const Login = ({ title }: LoginProps) => {
     <div className="signup-container">
       <h1>Sign Up</h1>
       {!newAccCreated && (
-        <div className="to-login-msg">
-          Existing account? <Link to="/login">Login</Link>
-        </div>
+        <Typography textAlign="center" mb={2}>
+          Existing account?{" "}
+          <Link component={RouterLink} to="/login">
+            Login
+          </Link>
+        </Typography>
       )}
       <Notification {...notif}></Notification>
       {newAccCreated && (
-        <div className="to-login-msg">
-          <Link to="/login">Proceed to login</Link>
-        </div>
+        <Typography textAlign="center" mb={2}>
+          <Link component={RouterLink} to="/login">
+            Proceed to login
+          </Link>
+        </Typography>
       )}
       <Formik
         initialValues={{ username: "", password: "" }}

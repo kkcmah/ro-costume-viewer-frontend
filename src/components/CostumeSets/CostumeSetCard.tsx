@@ -189,7 +189,7 @@ const CostumeSetCard = ({ costumeSet, isMySet }: CostumeSetCardProps) => {
           {disableButtons ? (
             <FavoriteIcon color="disabled"></FavoriteIcon>
           ) : (
-            <FavoriteIcon color={liked ? "error" : "inherit"} />
+            <FavoriteIcon htmlColor={liked ? "red" : undefined} />
           )}
         </IconButton>
         <Typography variant="body2" mr={"auto"}>
@@ -205,7 +205,7 @@ const CostumeSetCard = ({ costumeSet, isMySet }: CostumeSetCardProps) => {
               <EditIcon color={disableButtons ? "disabled" : "primary"} />
             </IconButton>
             <IconButton disabled={disableButtons} onClick={handleClickDelete}>
-              <DeleteIcon color={disableButtons ? "disabled" : "error"} />
+              <DeleteIcon htmlColor={disableButtons ? "disabled" : "red"} />
             </IconButton>
           </Typography>
         )}

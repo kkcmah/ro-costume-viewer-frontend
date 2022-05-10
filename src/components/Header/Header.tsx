@@ -1,17 +1,24 @@
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
-import { Link, useNavigate } from "react-router-dom";
+import Switch from "@mui/material/Switch";
+import Toolbar from "@mui/material/Toolbar";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
+
 import { setUser } from "../../state/reducer";
-import { useContext } from "react";
 import { StateContext } from "../../state/state";
 import loginService from "../../services/loginService";
+import { ColorModeContext } from "../../MyTheme/MyTheme";
 
 const Header = () => {
   const [state, dispatch] = useContext(StateContext);
   const navigate = useNavigate();
+
+  const colorMode = useContext(ColorModeContext);
 
   const handleLogout = () => {
     loginService.logout();
@@ -34,12 +41,31 @@ const Header = () => {
           >
             Sets
           </Button>
+          <Box mr={1} display="flex" alignItems="center">
+            <DarkModeIcon htmlColor="white" />
+            <Switch
+              color="default"
+              onChange={colorMode.toggleColorMode}
+            ></Switch>
+            <LightModeIcon htmlColor="yellow" />
+          </Box>
           {!state.user && (
             <>
-              <Button component={Link} to="/login" color="inherit">
+              <Button
+                sx={{ mr: 1 }}
+                component={Link}
+                to="/login"
+                variant="contained"
+                color="primary"
+              >
                 Login
               </Button>
-              <Button component={Link} to="/signup" color="inherit">
+              <Button
+                component={Link}
+                to="/signup"
+                variant="contained"
+                color="secondary"
+              >
                 Sign Up
               </Button>
             </>
