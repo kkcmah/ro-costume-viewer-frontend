@@ -11,6 +11,7 @@ const Footer = () => {
         mx="auto"
         maxWidth="80vw"
         variant="caption"
+        textAlign="center"
       >
         <Divider></Divider>
         Ragnarok Online is owned by Gravity Interactive, Inc. This

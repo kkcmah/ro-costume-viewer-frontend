@@ -42,6 +42,7 @@ const CostumeSetCard = ({ costumeSet, isMySet }: CostumeSetCardProps) => {
   const [loadingLikeClick, setLoadingLikeClick] = useState<boolean>(false);
   const [liked, setLiked] = useState<boolean>(false);
   const [initialLiked, setInitialLiked] = useState<boolean>(false);
+  const [raised, setRaised] = useState<boolean>(false);
 
   useEffect(() => {
     if (state.user) {
@@ -130,15 +131,27 @@ const CostumeSetCard = ({ costumeSet, isMySet }: CostumeSetCardProps) => {
     }
   };
 
-  const temp = [3, 234, 52, 35, 2, 3, 12, 123, 123, 124, 124, 124, 124];
+  // const temp = [3, 234, 52, 35, 2, 3, 12, 123, 123, 124, 124, 124, 124];
   //costumeSet.costumes.
 
   //costumeSet.description
-  const desc =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vulputate nunc purus, ut porta morbi.m ipsum dolor sit amet, consectetur adipiscing elit. Nullam vulputate nunc purus, ";
+  // const desc =
+  //   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vulputate nunc purus, ut porta morbi.m ipsum dolor sit amet, consectetur adipiscing elit. Nullam vulputate nunc purus, ";
+
+  const handleMouseEnter = () => {
+    setRaised(true);
+  };
+
+  const handleMouseLeave = () => {
+    setRaised(false);
+  };
 
   return (
-    <Card>
+    <Card
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      raised={raised}
+    >
       {loading && <LinearProgress />}
       <AlertNotification
         isErr={isErr}
@@ -165,20 +178,23 @@ const CostumeSetCard = ({ costumeSet, isMySet }: CostumeSetCardProps) => {
           spacing={{ xs: 1 }}
           columns={{ xs: 6, sm: 8, md: 12 }}
         >
-          {temp.slice(0, numOfCostumesToShow).map((cos, ind) => (
-            <Grid item xs={2} sm={2} md={2} key={ind}>
+          {costumeSet.costumes.slice(0, numOfCostumesToShow).map((cos) => (
+            <Grid item xs={2} sm={2} md={2} key={cos.id}>
               <Typography
                 m="auto"
                 component="div"
+                // TODO replace with cos.className later
                 className="costume costume-18740"
               ></Typography>
             </Grid>
           ))}
         </Grid>
-        {temp.length > numOfCostumesToShow && (
+        {costumeSet.costumes.length > numOfCostumesToShow && (
           <Typography variant="caption">And more...</Typography>
         )}
-        <Typography variant="body1">{descToShow(desc)}</Typography>
+        <Typography variant="body1">
+          {descToShow(costumeSet.description)}
+        </Typography>
       </CardContent>
       <CardActions>
         <IconButton

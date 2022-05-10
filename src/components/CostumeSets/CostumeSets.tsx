@@ -17,6 +17,7 @@ import CSSearchForm from "./CSSearchForm";
 import { StateContext } from "../../state/state";
 import CostumeSetCard from "./CostumeSetCard";
 import { useTitle } from "../../hooks/useTitle";
+import { Typography } from "@mui/material";
 
 interface CostumeSetsProps {
   title: string;
@@ -58,15 +59,12 @@ const CostumeSets = ({ title, isProfile, isMySets }: CostumeSetsProps) => {
       } else {
         response = await costumeSetsService.getAll(params);
       }
-      console.log(response, isLoadMore);
-      setCount(20);
-      setCostumeSets((prev) => [...prev, ...response.costumeSets]);
-      // if (isLoadMore) {
-      //   setCostumeSets((prev) => [...prev, ...response.costumeSets]);
-      // } else {
-      //   setCostumeSets(response.costumeSets);
-      //   setCount(response.count);
-      // }
+      if (isLoadMore) {
+        setCostumeSets((prev) => [...prev, ...response.costumeSets]);
+      } else {
+        setCostumeSets(response.costumeSets);
+        setCount(response.count);
+      }
     } catch (error) {
       setErrorMsg(formatErrorAsString(error));
     } finally {
@@ -132,13 +130,19 @@ const CostumeSets = ({ title, isProfile, isMySets }: CostumeSetsProps) => {
         ></CSSearchForm>
       </Stack>
 
+      {!loading && (
+        <Typography>
+          <i>Showing {count} set(s)</i>
+        </Typography>
+      )}
+
       <Grid
         container
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
-        {costumeSets.map((cosSet, ind) => (
-          <Grid item xs={4} sm={4} md={4} key={ind}>
+        {costumeSets.map((cosSet) => (
+          <Grid item xs={4} sm={4} md={4} key={cosSet.id}>
             <CostumeSetCard
               costumeSet={cosSet}
               isMySet={isMySets}
@@ -157,8 +161,6 @@ const CostumeSets = ({ title, isProfile, isMySets }: CostumeSetsProps) => {
           </Button>
         </Stack>
       )}
-      {count}
-      {costumeSets.length}
     </>
   );
 };

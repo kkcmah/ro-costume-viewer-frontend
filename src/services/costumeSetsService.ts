@@ -10,7 +10,6 @@ import authHeaderService from "./authHeaderService";
 const baseUrl = "/api/costumeSets";
 
 const getAll = async (params: CostumeSetsPagedParams) => {
-  console.log("PARAMS all public", params);
   const res = await axios.post<CostumeSetsWithCount>(`${baseUrl}/params`, {
     ...params,
   });
@@ -18,7 +17,6 @@ const getAll = async (params: CostumeSetsPagedParams) => {
 };
 
 const getAllLikedPubOrOwn = async (params: CostumeSetsPagedParams) => {
-  console.log("PARAMS liked", params);
   const res = await axios.post<CostumeSetsWithCount>(
     `${baseUrl}/profileliked/params`,
     {
@@ -30,7 +28,6 @@ const getAllLikedPubOrOwn = async (params: CostumeSetsPagedParams) => {
 };
 
 const getAllOwned = async (params: CostumeSetsPagedParams) => {
-  console.log("PARAMS owned", params);
   const res = await axios.post<CostumeSetsWithCount>(
     `${baseUrl}/owned/params`,
     {

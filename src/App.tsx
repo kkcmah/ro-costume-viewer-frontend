@@ -1,23 +1,22 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 
-import { useContext, useEffect, useState } from "react";
+import { APP_TITLE } from "./constants";
+import usersService from "./services/usersService";
+import { StateContext } from "./state/state";
+import { setUser } from "./state/reducer";
 import CostumeList from "./components/CostumeList/CostumeList";
 import loginService from "./services/loginService";
 import Login from "./components/Login/Login";
 import Header from "./components/Header/Header";
-import usersService from "./services/usersService";
-import { StateContext } from "./state/state";
-import { setUser } from "./state/reducer";
 import SignUp from "./components/SignUp/SignUp";
 import Logout from "./components/Logout/Logout";
-import { Navigate } from "react-router-dom";
 import NoMatchPage from "./components/NoMatchPage/NoMatchPage";
 import CostumeSets from "./components/CostumeSets/CostumeSets";
 import CreateCostumeSet from "./components/CreateCostumeSet/CreateCostumeSet";
 import Profile from "./components/Profile/Profile";
 import CostumeSetDetail from "./components/CostumeSetDetail/CostumeSetDetail";
-import { APP_TITLE } from "./constants";
 import EditCostumeSet from "./components/EditCostumeSet/EditCostumeSet";
 import LoadingPage from "./components/LoadingPage/LoadingPage";
 import Footer from "./components/Footer/Footer";
@@ -49,9 +48,7 @@ const App = () => {
         loginService.logout();
         dispatch(setUser(null));
       } finally {
-        setTimeout(() => {
-          setLoading(false);
-        }, 1500);
+        setLoading(false);
       }
     };
 
@@ -72,7 +69,7 @@ const App = () => {
       )}
       {!loading && (
         <div className="App" hidden={!doneFromLP}>
-          <Router>
+          <BrowserRouter>
             <Container sx={{ minHeight: "90vh" }}>
               <Header></Header>
               <Routes>
@@ -133,7 +130,7 @@ const App = () => {
               </Routes>
             </Container>
             <Footer></Footer>
-          </Router>
+          </BrowserRouter>
         </div>
       )}
     </>
