@@ -1,4 +1,4 @@
-import { memo, useContext, useEffect, useState } from "react";
+import { memo, useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
@@ -43,6 +43,7 @@ const CostumeSetCard = ({ costumeSet, isMySet }: CostumeSetCardProps) => {
   const [liked, setLiked] = useState<boolean>(false);
   const [initialLiked, setInitialLiked] = useState<boolean>(false);
   const [raised, setRaised] = useState<boolean>(false);
+  const costumeSetLikes = useRef<number>(costumeSet.likes);
 
   useEffect(() => {
     if (state.user) {
@@ -57,11 +58,11 @@ const CostumeSetCard = ({ costumeSet, isMySet }: CostumeSetCardProps) => {
 
   const numLikesToDisplay = (() => {
     if (initialLiked && !liked) {
-      return costumeSet.likes - 1;
+      return costumeSetLikes.current - 1;
     } else if (!initialLiked && liked) {
-      return costumeSet.likes + 1;
+      return costumeSetLikes.current + 1;
     }
-    return costumeSet.likes;
+    return costumeSetLikes.current;
   })();
 
   // truncate the description and suffix it with ... if its too long
@@ -230,7 +231,9 @@ const CostumeSetCard = ({ costumeSet, isMySet }: CostumeSetCardProps) => {
           color="info"
           disabled={disableButtons}
           component={Link}
-          to={isMySet ? `/sets/owned/${costumeSet.id}` : `/sets/${costumeSet.id}`}
+          to={
+            isMySet ? `/sets/owned/${costumeSet.id}` : `/sets/${costumeSet.id}`
+          }
         >
           Details
         </Button>
