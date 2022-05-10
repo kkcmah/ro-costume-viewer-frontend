@@ -154,7 +154,7 @@ const CostumeSetCard = ({ costumeSet, isMySet }: CostumeSetCardProps) => {
           (disableButtons ? (
             <PublicIcon color="disabled" />
           ) : (
-            <PublicIcon color={costumeSet.isPublic ? "primary" : "disabled"} />
+            <PublicIcon color={costumeSet.isPublic ? "info" : "disabled"} />
           ))
         }
       />
@@ -202,7 +202,7 @@ const CostumeSetCard = ({ costumeSet, isMySet }: CostumeSetCardProps) => {
               component={Link}
               to={`/sets/edit/${costumeSet.id}`}
             >
-              <EditIcon color={disableButtons ? "disabled" : "primary"} />
+              <EditIcon color={disableButtons ? "disabled" : "info"} />
             </IconButton>
             <IconButton disabled={disableButtons} onClick={handleClickDelete}>
               <DeleteIcon htmlColor={disableButtons ? "disabled" : "red"} />
@@ -211,6 +211,7 @@ const CostumeSetCard = ({ costumeSet, isMySet }: CostumeSetCardProps) => {
         )}
         <Button
           size="small"
+          color="info"
           disabled={disableButtons}
           component={Link}
           to={`/sets/${costumeSet.id}`}
