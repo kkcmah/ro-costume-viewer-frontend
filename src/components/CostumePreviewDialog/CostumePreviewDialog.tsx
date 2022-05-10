@@ -72,7 +72,8 @@ const CostumePreviewDialog = ({
       </DialogContent>
       <DialogActions>
         <Typography m="auto">
-          <Switch checked={loop} onChange={handleChange} /> Loop Video
+          <Switch color="info" checked={loop} onChange={handleChange} /> Loop
+          Video
         </Typography>
         <Button onClick={closePreview}>Close</Button>
       </DialogActions>

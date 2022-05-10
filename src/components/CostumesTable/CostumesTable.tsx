@@ -5,6 +5,7 @@ import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Paper from "@mui/material/Paper";
+import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -24,6 +25,12 @@ import AlertNotification from "../AlertNotification/AlertNotification";
 import { formatErrorAsString } from "../../services/helpersService";
 import useAlertNotification from "../AlertNotification/useAlertNotification";
 import "../../spritesheet/spritesheet.css";
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.background.paper,
+  },
+}));
 
 interface CostumesTableProps {
   costumes: Costume[];
@@ -124,7 +131,7 @@ const CostumesTable = ({
           <TableBody>
             {costumes.map((cos) => {
               return (
-                <TableRow hover key={cos.id}>
+                <StyledTableRow hover key={cos.id}>
                   <TableCell>
                     <Box
                       sx={{
@@ -150,7 +157,7 @@ const CostumesTable = ({
                           >
                             <Button
                               size="small"
-                              color="primary"
+                              color="info"
                               variant="outlined"
                               onClick={() => openPreview(cos)}
                             >
@@ -163,7 +170,7 @@ const CostumesTable = ({
                             }}
                           >
                             <IconButton
-                              color="primary"
+                              color="info"
                               aria-label="show preview"
                               onClick={() => openPreview(cos)}
                             >
@@ -195,7 +202,7 @@ const CostumesTable = ({
                       </IconButton>
                     </TableCell>
                   )}
-                </TableRow>
+                </StyledTableRow>
               );
             })}
           </TableBody>

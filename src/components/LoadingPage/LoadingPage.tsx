@@ -115,9 +115,6 @@ const LoadingPage = ({ loading, handleLPDoneClick }: LoadingPageProps) => {
   const attachIconMover = () => {
     if (!moveListenerAdded) {
       setMoveListenerAdded(true);
-      setIconContainerStyle((prev) => {
-        return { ...prev, pointerEvents: "none" };
-      });
       pageRef.current?.addEventListener("mousemove", (ev) => handleMove(ev));
     }
   };
@@ -160,16 +157,26 @@ const LoadingPage = ({ loading, handleLPDoneClick }: LoadingPageProps) => {
       >
         New Icons!
       </button>
-      <div
-        className="lp-icons-container"
-        style={iconContainerStyle}
-        onMouseEnter={attachIconMover}
-      >
-        {itemStyles.map((item, ind) => {
-          return (
-            <div key={ind} className={item.classes} style={item.style}></div>
-          );
-        })}
+      {/* extra divs to bring container to the same plane as buttons above
+            so that the container doesn't prevent clicks*/}
+      <div>
+        <div>
+          <div
+            className="lp-icons-container"
+            style={iconContainerStyle}
+            onMouseEnter={attachIconMover}
+          >
+            {itemStyles.map((item, ind) => {
+              return (
+                <div
+                  key={ind}
+                  className={item.classes}
+                  style={item.style}
+                ></div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );

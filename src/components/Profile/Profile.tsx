@@ -48,7 +48,7 @@ const Profile = ({ title }: ProfileProps) => {
     <Box>
       <Typography variant="h4">Hi {state.user.username}</Typography>
 
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider", marginBottom: 1 }}>
         <Tabs
           value={tabValue}
           onChange={handleChange}

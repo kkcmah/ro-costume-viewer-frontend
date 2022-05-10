@@ -63,7 +63,7 @@ const CostumesToAddList = ({
                         <IconButton
                           edge="start"
                           aria-label="preview"
-                          color="primary"
+                          color="info"
                           onClick={() => openPreview(costume)}
                         >
                           <VisibilityIcon />

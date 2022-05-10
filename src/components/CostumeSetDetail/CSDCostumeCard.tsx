@@ -77,8 +77,12 @@ const CSDCostumeCard = ({ costume }: CSDCostumeCardProps) => {
                   </video>
                 </Typography>
                 <Typography textAlign="center">
-                  <Switch checked={loop} onChange={handleLoopChange} /> Loop
-                  Video
+                  <Switch
+                    color="info"
+                    checked={loop}
+                    onChange={handleLoopChange}
+                  />{" "}
+                  Loop Video
                 </Typography>
               </AccordionDetails>
             )}
