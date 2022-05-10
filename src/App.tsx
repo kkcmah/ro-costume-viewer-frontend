@@ -20,6 +20,7 @@ import CostumeSetDetail from "./components/CostumeSetDetail/CostumeSetDetail";
 import { APP_TITLE } from "./constants";
 import EditCostumeSet from "./components/EditCostumeSet/EditCostumeSet";
 import LoadingPage from "./components/LoadingPage/LoadingPage";
+import Footer from "./components/Footer/Footer";
 
 const App = () => {
   const [state, dispatch] = useContext(StateContext);
@@ -72,7 +73,7 @@ const App = () => {
       {!loading && (
         <div className="App" hidden={!doneFromLP}>
           <Router>
-            <Container>
+            <Container sx={{ minHeight: "90vh" }}>
               <Header></Header>
               <Routes>
                 <Route
@@ -131,6 +132,7 @@ const App = () => {
                 />
               </Routes>
             </Container>
+            <Footer></Footer>
           </Router>
         </div>
       )}
