@@ -1,12 +1,42 @@
-# Patientor - frontend
+# RO Costume Viewer Frontend
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+Additionally, it was made using [React](https://reactjs.org/), [MUI](https://mui.com/), [TypeScript](https://www.typescriptlang.org/), [Formik](https://formik.org/), [React Router](https://reactrouter.com/), and [Axios](https://axios-http.com/).
 
-In the project directory, you can run:
+The hosted version is here:
 
-### `npm install`
+TODO
+
+https://herokuapp.com
+
+Initial load times can be slow if the Heroku server needs to come out of slumber.
+
+The backend for this project can be found here:
+
+https://github.com
+
+## Project Motivation
+
+Cosmetics are an ideal form of expressing oneself, especially in MMORPGs. In the game Ragnarok Online, thousands of costumes are available for customizing your characters.
+
+I wanted to create a way for people to preview different costumes and manage their costume sets. Instead of farming for a certain costume, fumbling with Gacha RNG, sifting through your storage, and even having to load up the game, one can view their current and soon to be costumes on the web.
+
+## Features
+
+TODO put demo video and put timestamps?
+
+- User persistance via sign up and login
+- Previews are currently all using the base male Assassin Cross job model with a neutral pallete
+- Ability for users to view a list of costumes, preview those that have urls, and favorite them
+- Ability for users to like, create, view, update, and delete costume sets
+- Profile page to view own created sets, favorited costumes, and liked sets
+- Light and dark modes
+- Search and pagination on costume list and costume set lists
+
+## Scripts
+
+#### `npm install`
 
 Install the project dependencies.
 
@@ -15,26 +45,35 @@ Install the project dependencies.
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### `npm run lint`
+
+Runs linter and lets you know if there are any issues among .ts and .tsx files.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Testing will be implemented later on... Jest and Cypress are the planned tools for this.
 
 ### `npm build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Builds the app for production to the `build` folder. Delete the source mapping .map files. Throw the build folder into the backend project's root directory and it will be served statically via Express.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Roadmap
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Ideally, I want to create a model viewer that allows users to select different genders, jobs, customize hair styles and color, customize clothing color, and superposition costumes on top of each other.
 
-## Learn More
+<p>
+This project is mainly used as a learning tool for myself to improve my React and web skills. The aforementioned features would be built using this as a foundation of some sorts.
+<p>
+However, moving forwards with this project:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+-Having worked with a non-relational database, MongoDB, on this project, I realize I prefer relational SQL databases. I may migrate over to MS SQL Server or PostgresSQL.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+-I have some backend endpoints that allow admin type users to add costumes and costume tags. I may want to implement an admin portal.
+
+-Currently, I am being hosted on free tiers. If there's a need, I may migrate to dedicated hosters.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+Ragnarok Online is owned by Gravity Interactive, Inc. This project is not endorsed by them.
