@@ -27,7 +27,7 @@ declare global {
     interface Chainable {
       /**
        * Custom command to login
-       * @example cy.login({user, pass})
+       * @example cy.login({username: "myuser", password: "mypass"})
        */
       login(userLoginCreds: UserLoginCreds): Chainable<Element>;
       /**

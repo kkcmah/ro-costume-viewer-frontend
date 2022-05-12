@@ -30,7 +30,12 @@ const Header = () => {
     <Box sx={{ flexGrow: 1 }} mb={1}>
       <AppBar position="static">
         <Toolbar>
-          <Button component={Link} to="/" color="inherit">
+          <Button
+            component={Link}
+            to="/"
+            color="inherit"
+            data-cy="header-home-btn"
+          >
             Home
           </Button>
           <Button
@@ -38,6 +43,7 @@ const Header = () => {
             to="/sets"
             color="inherit"
             sx={{ marginRight: "auto" }}
+            data-cy="header-sets-btn"
           >
             Sets
           </Button>
@@ -46,6 +52,7 @@ const Header = () => {
             <Switch
               color="default"
               onChange={colorMode.toggleColorMode}
+              data-cy="header-theme-switch"
             ></Switch>
             <LightModeIcon fontSize="small" htmlColor="yellow" />
           </Box>

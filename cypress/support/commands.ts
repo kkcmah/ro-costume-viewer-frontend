@@ -32,7 +32,6 @@ Cypress.Commands.add("login", ({ username, password }) => {
     username,
     password,
   }).then((response) => {
-    localStorage.setItem("user", JSON.stringify(response.body));
-    cy.visit("/");
+    localStorage.setItem("user", response.body.token as string);
   });
 });
