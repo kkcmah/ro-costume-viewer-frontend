@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Additionally, it was made using [React](https://reactjs.org/), [MUI](https://mui.com/), [TypeScript](https://www.typescriptlang.org/), [Formik](https://formik.org/), [React Router](https://reactrouter.com/), and [Axios](https://axios-http.com/).
+Additionally, it was made using [React](https://reactjs.org/), [MUI](https://mui.com/), [TypeScript](https://www.typescriptlang.org/), [Formik](https://formik.org/), [React Router](https://reactrouter.com/), and [Axios](https://axios-http.com/). Also, tested using [Cypress](https://www.cypress.io/).
 
 The hosted version is here:
 
@@ -49,9 +49,15 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 Runs linter and lets you know if there are any issues among .ts and .tsx files.
 
+### `npm run cypress:open`
+
+First, ensure that the backend is running in test mode i.e. `npm run start:test`
+
+Opens Cypress for testing. Tests are located in cypress/integration/mine.
+
 ### `npm test`
 
-Testing will be implemented later on... Jest and Cypress are the planned tools for this.
+This currently doesn't do anything. Jest and/or Cypress (from above) are the planned tools for this.
 
 ### `npm build`
 

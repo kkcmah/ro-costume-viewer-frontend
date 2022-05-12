@@ -140,10 +140,18 @@ const LoadingPage = ({ loading, handleLPDoneClick }: LoadingPageProps) => {
           <>
             <div className="lp-countdown-container">
               <h2 className="lp-mr-10px">{countdownText}</h2>
-              <button className="lp-btn lp-mr-10px" onClick={handleWaitClick}>
+              <button
+                className="lp-btn lp-mr-10px"
+                data-cy="stop-btn"
+                onClick={handleWaitClick}
+              >
                 Stop
               </button>
-              <button className="lp-btn" onClick={handleLPDoneClick}>
+              <button
+                className="lp-btn"
+                data-cy="lets-go-btn"
+                onClick={handleLPDoneClick}
+              >
                 Let&apos;s Go!
               </button>
             </div>
@@ -153,6 +161,7 @@ const LoadingPage = ({ loading, handleLPDoneClick }: LoadingPageProps) => {
       <button
         id="lp-new-icons-btn"
         className="lp-btn"
+        data-cy="new-icons-btn"
         onClick={createItemStyles}
       >
         New Icons!
@@ -165,6 +174,7 @@ const LoadingPage = ({ loading, handleLPDoneClick }: LoadingPageProps) => {
             className="lp-icons-container"
             style={iconContainerStyle}
             onMouseEnter={attachIconMover}
+            data-cy="lp-icons-container"
           >
             {itemStyles.map((item, ind) => {
               return (

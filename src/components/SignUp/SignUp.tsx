@@ -90,12 +90,14 @@ const Login = ({ title }: LoginProps) => {
               name="username"
               type="text"
               label="Username"
+              data-cy="username-input"
             />
             <MyTextField
               id="signup-password-input"
               name="password"
               type="password"
               label="Password"
+              data-cy="password-input"
             />
             <div>
               <Button
@@ -103,6 +105,7 @@ const Login = ({ title }: LoginProps) => {
                 color="primary"
                 variant="contained"
                 type="submit"
+                data-cy="signup-btn"
                 disabled={!dirty || !isValid || isSubmitting}
               >
                 Sign Up
