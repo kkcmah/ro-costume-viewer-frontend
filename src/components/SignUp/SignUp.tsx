@@ -41,11 +41,11 @@ const Login = ({ title }: LoginProps) => {
 
   return (
     <div className="signup-container">
-      <h1>Sign Up</h1>
+      <Typography variant="h3">Sign Up</Typography>
       {!newAccCreated && (
         <Typography textAlign="center" mb={2}>
           Existing account?{" "}
-          <Link component={RouterLink} to="/login">
+          <Link component={RouterLink} to="/login" data-cy="login-link">
             Login
           </Link>
         </Typography>
@@ -53,9 +53,15 @@ const Login = ({ title }: LoginProps) => {
       <Notification {...notif}></Notification>
       {newAccCreated && (
         <Typography textAlign="center" mb={2}>
-          <Link component={RouterLink} to="/login">
+          <Button
+            variant="contained"
+            color="success"
+            component={RouterLink}
+            to="/login"
+            data-cy="proceed-login-btn"
+          >
             Proceed to login
-          </Link>
+          </Button>
         </Typography>
       )}
       <Formik
@@ -90,14 +96,16 @@ const Login = ({ title }: LoginProps) => {
               name="username"
               type="text"
               label="Username"
-              data-cy="username-input"
+              required={true}
+              data-cy="signup-username-input"
             />
             <MyTextField
               id="signup-password-input"
               name="password"
               type="password"
               label="Password"
-              data-cy="password-input"
+              required={true}
+              data-cy="signup-password-input"
             />
             <div>
               <Button

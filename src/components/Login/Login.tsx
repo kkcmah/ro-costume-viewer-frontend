@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
 
 import { StateContext } from "../../state/state";
 import { setUser } from "../../state/reducer";
@@ -37,7 +38,7 @@ const Login = ({ title }: LoginProps) => {
 
   return (
     <div className="login-container">
-      <h1>Login</h1>
+      <Typography variant="h3">Login</Typography>
       <AlertNotification {...notif}></AlertNotification>
       <Formik
         initialValues={{ username: "", password: "" }}
@@ -63,6 +64,7 @@ const Login = ({ title }: LoginProps) => {
               type="text"
               label="Username"
               required={true}
+              data-cy="login-username-input"
             />
             <MyTextField
               id="login-password-input"
@@ -70,6 +72,7 @@ const Login = ({ title }: LoginProps) => {
               type="password"
               label="Password"
               required={true}
+              data-cy="login-password-input"
             />
             <div className="login-btn-container">
               <Button
@@ -78,6 +81,7 @@ const Login = ({ title }: LoginProps) => {
                 variant="outlined"
                 type="submit"
                 disabled={!dirty || !isValid || isSubmitting}
+                data-cy="login-btn"
               >
                 Log in
               </Button>

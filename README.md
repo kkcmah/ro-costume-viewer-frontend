@@ -42,7 +42,8 @@ Install the project dependencies.
 
 ### `npm start`
 
-Runs the app in the development mode.<br />
+Runs the app in the development mode.
+
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### `npm run lint`
@@ -53,11 +54,13 @@ Runs linter and lets you know if there are any issues among .ts and .tsx files.
 
 First, ensure that the backend is running in test mode i.e. `npm run start:test`
 
+Note: elements with data-cy props or similar data-\* props are used for testing and should be carried forward with any element changes or have their tests rewritten.
+
 Opens Cypress for testing. Tests are located in cypress/integration/mine.
 
 ### `npm test`
 
-This currently doesn't do anything. Jest and/or Cypress (from above) are the planned tools for this.
+This currently doesn't do anything. Jest and/or Cypress (from above) are the planned tools for this. Use `npm run cypress:open` for now.
 
 ### `npm build`
 
@@ -65,11 +68,10 @@ Builds the app for production to the `build` folder. Delete the source mapping .
 
 ## Roadmap
 
-Ideally, I want to create a model viewer that allows users to select different genders, jobs, customize hair styles and color, customize clothing color, and superposition costumes on top of each other.
+Ideally, I want to create a model viewer that allows users to select different genders, jobs, customize hair styles and color, customize clothing color, customize backgrounds, move, rotate, and superposition costumes on top of each other.
 
-<p>
 This project is mainly used as a learning tool for myself to improve my React and web skills. The aforementioned features would be built using this as a foundation of some sorts.
-<p>
+
 However, moving forwards with this project:
 
 -Having worked with a non-relational database, MongoDB, on this project, I realize I prefer relational SQL databases. I may migrate over to MS SQL Server or PostgresSQL.
