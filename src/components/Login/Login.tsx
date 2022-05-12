@@ -38,7 +38,7 @@ const Login = ({ title }: LoginProps) => {
 
   return (
     <div className="login-container">
-      <Typography variant="h3">Login</Typography>
+      <Typography variant="h3" mb={1}>Login</Typography>
       <AlertNotification {...notif}></AlertNotification>
       <Formik
         initialValues={{ username: "", password: "" }}
@@ -91,7 +91,7 @@ const Login = ({ title }: LoginProps) => {
       </Formik>
       <div>
         No account?{" "}
-        <Link component={RouterLink} to="/signup">
+        <Link component={RouterLink} to="/signup" data-cy="signup-link">
           Sign Up
         </Link>
       </div>

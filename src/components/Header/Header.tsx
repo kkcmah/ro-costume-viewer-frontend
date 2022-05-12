@@ -57,6 +57,7 @@ const Header = () => {
                 to="/login"
                 variant="contained"
                 color="primary"
+                data-cy="header-login-btn"
               >
                 Login
               </Button>
@@ -65,6 +66,7 @@ const Header = () => {
                 to="/signup"
                 variant="contained"
                 color="secondary"
+                data-cy="header-signup-btn"
               >
                 Sign Up
               </Button>
@@ -72,10 +74,19 @@ const Header = () => {
           )}
           {state.user && (
             <>
-              <Button component={Link} to="/profile" color="inherit">
+              <Button
+                component={Link}
+                to="/profile"
+                color="inherit"
+                data-cy="header-profile-btn"
+              >
                 <Avatar>{state.user.username[0]}</Avatar>
               </Button>
-              <Button color="inherit" onClick={handleLogout}>
+              <Button
+                color="inherit"
+                onClick={handleLogout}
+                data-cy="header-logout-btn"
+              >
                 Log out
               </Button>
             </>

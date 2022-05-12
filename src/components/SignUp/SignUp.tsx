@@ -41,7 +41,7 @@ const Login = ({ title }: LoginProps) => {
 
   return (
     <div className="signup-container">
-      <Typography variant="h3">Sign Up</Typography>
+      <Typography variant="h3" mb={1}>Sign Up</Typography>
       {!newAccCreated && (
         <Typography textAlign="center" mb={2}>
           Existing account?{" "}
