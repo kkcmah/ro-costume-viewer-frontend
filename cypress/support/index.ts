@@ -46,7 +46,9 @@ declare global {
        */
       seedCostume(newCostume: NewCostume): Chainable<Element>;
       /**
-       * Custom command to seed a specified number of random costumes
+       * Custom command to seed a specified number of random costumes.
+       * itemIds start at 0.
+       * name starts at cosname10 and goes up to cosname10+num ex. cosname10, cosname11, .... cosname29
        * @example cy.seedNumCostumes(30)
        */
       seedNumCostumes(num: number): Chainable<Element>;

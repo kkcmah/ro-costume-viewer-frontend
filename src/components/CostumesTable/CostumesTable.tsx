@@ -160,6 +160,7 @@ const CostumesTable = ({
                               color="info"
                               variant="outlined"
                               onClick={() => openPreview(cos)}
+                              data-cy="costumes-table-preview-sm-btn"
                             >
                               Preview
                             </Button>
@@ -173,6 +174,7 @@ const CostumesTable = ({
                               color="info"
                               aria-label="show preview"
                               onClick={() => openPreview(cos)}
+                              data-cy="costumes-table-preview-icon-btn"
                             >
                               <VisibilityIcon />
                             </IconButton>
@@ -191,6 +193,7 @@ const CostumesTable = ({
                       <IconButton
                         aria-label="toggle favorite"
                         onClick={() => void toggleFavCostume(cos.id)}
+                        data-cy={`costumes-table-fav-btn-${cos.itemId}`}
                       >
                         <FavoriteIcon
                           htmlColor={

@@ -30,6 +30,8 @@ const Profile = ({ title }: ProfileProps) => {
     return {
       id: `${TABS[index]}-tab`,
       "aria-controls": `${TABS[index]}-tabpanel`,
+      // prop for testing
+      "data-cy": `profile-tab-${TABS[index]}`,
     };
   };
 
