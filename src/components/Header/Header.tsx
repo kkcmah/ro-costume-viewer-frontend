@@ -34,6 +34,7 @@ const Header = () => {
             component={Link}
             to="/"
             color="inherit"
+            size="small"
             data-cy="header-home-btn"
           >
             Home
@@ -42,6 +43,7 @@ const Header = () => {
             component={Link}
             to="/sets"
             color="inherit"
+            size="small"
             sx={{ marginRight: "auto" }}
             data-cy="header-sets-btn"
           >
@@ -64,6 +66,7 @@ const Header = () => {
                 to="/login"
                 variant="contained"
                 color="primary"
+                size="small"
                 data-cy="header-login-btn"
               >
                 Login
@@ -73,6 +76,7 @@ const Header = () => {
                 to="/signup"
                 variant="contained"
                 color="secondary"
+                size="small"
                 data-cy="header-signup-btn"
               >
                 Sign Up
@@ -85,6 +89,7 @@ const Header = () => {
                 component={Link}
                 to="/profile"
                 color="inherit"
+                size="small"
                 data-cy="header-profile-btn"
               >
                 <Avatar>{state.user.username[0]}</Avatar>
@@ -92,6 +97,7 @@ const Header = () => {
               <Button
                 color="inherit"
                 onClick={handleLogout}
+                size="small"
                 data-cy="header-logout-btn"
               >
                 Log out
