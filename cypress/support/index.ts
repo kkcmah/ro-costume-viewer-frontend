@@ -17,7 +17,7 @@
 
 // Import commands.js using ES2015 syntax:
 import "./commands";
-import { UserLoginCreds } from "../../src/types";
+import { EquipSlot, NewCostume, UserLoginCreds } from "../../src/types";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
@@ -35,6 +35,28 @@ declare global {
        * @example cy.bypassLoading()
        */
       bypassLoading(): Chainable<Element>;
+      /**
+       * Custom command to seed a costume
+       * @example cy.seedCostume({itemId: 123,
+       * name: "hat",
+       * equipSlots: [EquipSlot.Top],
+       * costumeTags: [] or (note tag has to be seeded first) ["Blue"],
+       * previewUrl: "https://urlhere",
+       * className: "costume costume-18740"})
+       */
+      seedCostume(newCostume: NewCostume): Chainable<Element>;
+      /**
+       * Custom command to seed a specified number of random costumes
+       * @example cy.seedNumCostumes(30)
+       */
+      seedNumCostumes(num: number): Chainable<Element>;
     }
   }
 }
+
+// helper for seeding costume to get a random equip slot
+export const getRandomEquipSlot = (): EquipSlot => {
+  const ind = Math.floor(Math.random() * Object.keys(EquipSlot).length);
+  // cy.log(`${Object.keys(EquipSlot)[ind]}`);
+  return EquipSlot[`${Object.keys(EquipSlot)[ind]}`] as EquipSlot;
+};

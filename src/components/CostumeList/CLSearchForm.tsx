@@ -52,12 +52,14 @@ const CLSearchForm = ({
               name="itemId"
               type="text"
               label="Item id"
+              data-cy="CL-itemid-input"
             />
             <MyTextField
               id="search-name-input"
               name="name"
               type="text"
               label="Name"
+              data-cy="CL-name-input"
             />
             <MySelect
               name="equipSlots"
@@ -73,10 +75,16 @@ const CLSearchForm = ({
                 variant="outlined"
                 type="submit"
                 disabled={!isValid || isSubmitting || loading}
+                data-cy="CL-search-btn"
               >
                 Search
               </Button>
-              <Button color="primary" variant="outlined" onClick={handleReset}>
+              <Button
+                color="primary"
+                variant="outlined"
+                onClick={handleReset}
+                data-cy="CL-reset-btn"
+              >
                 Reset
               </Button>
             </div>

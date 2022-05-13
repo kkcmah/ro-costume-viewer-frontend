@@ -182,7 +182,7 @@ const CostumesTable = ({
                     </Box>
                   </TableCell>
                   <TableCell>{cos.itemId}</TableCell>
-                  <TableCell>{cos.equipSlots}</TableCell>
+                  <TableCell>{cos.equipSlots.join(" ")}</TableCell>
                   <TableCell>
                     {cos.costumeTags.map((tag) => tag.name).join(" ")}
                   </TableCell>

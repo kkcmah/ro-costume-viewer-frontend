@@ -38,6 +38,10 @@ export interface Costume {
   className: string;
 }
 
+export interface NewCostume extends Omit<Costume, "id" | "costumeTags"> {
+  costumeTags: string[];
+}
+
 export interface CostumeURLSearchParams {
   page?: string;
   rows?: string;

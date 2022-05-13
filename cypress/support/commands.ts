@@ -22,6 +22,9 @@
 //
 //
 // -- This will overwrite an existing command --
+
+import { getRandomEquipSlot } from ".";
+
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 Cypress.Commands.add("bypassLoading", () => {
   cy.get("[data-cy=lets-go-btn]").click();
@@ -34,4 +37,32 @@ Cypress.Commands.add("login", ({ username, password }) => {
   }).then((response) => {
     localStorage.setItem("user", response.body.token as string);
   });
+});
+
+Cypress.Commands.add(
+  "seedCostume",
+  ({ itemId, name, equipSlots, costumeTags, previewUrl, className }) => {
+    cy.request({
+      url: "/api/testing/seed/costume",
+      method: "POST",
+      body: { itemId, name, equipSlots, costumeTags, previewUrl, className },
+    });
+  }
+);
+
+Cypress.Commands.add("seedNumCostumes", (num) => {
+  // start from 10 so that sorting works as intended else you get ex. 8 coming after 10
+  const numStart = 10;
+  const costumesToSeed = [];
+  for (let i = 0; i < num; i++) {
+    costumesToSeed.push({
+      itemId: i,
+      name: `cosname${numStart + i}`,
+      equipSlots: [getRandomEquipSlot()],
+      costumeTags: [],
+      previewUrl: Math.random() > 0.5 ? "test" : "",
+      className: `costume costume-${18740 + i}`,
+    });
+  }
+  cy.request("POST", "/api/testing/seed/manyCostumes", costumesToSeed);
 });
