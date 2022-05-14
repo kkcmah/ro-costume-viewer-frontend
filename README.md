@@ -54,7 +54,7 @@ Runs linter and lets you know if there are any issues among .ts and .tsx files.
 
 First, ensure that the backend is running in test mode i.e. `npm run start:test`
 
-Note: elements with data-cy props or similar data-\* props are used for testing and should be carried forward with any element changes or have their tests rewritten.
+Note: elements with data-cy props or similar data-\* props and some ids are used for testing and should be carried forward with any element changes or have their tests rewritten.
 
 Opens Cypress for testing. Tests are located in cypress/integration/mine.
 

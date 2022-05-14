@@ -25,9 +25,28 @@ import {
   NewCostumeSet,
   UserLoginCreds,
 } from "../../src/types";
+import axios from "axios";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// check to see if server is running in test mode prior to running tests
+// https://stackoverflow.com/questions/61661932/cypress-interrupt-all-tests-on-first-failure
+axios
+  .get<boolean>("/api/testing")
+  .then((res) => {
+    if (!res.data) {
+      throw new Error("Server is not in test mode");
+    }
+  })
+  .catch(() => {
+    setTimeout(() => {
+      eval(
+        "window.top.document.body.querySelector('header button.stop').click()"
+      );
+    }, 10);
+    throw new Error("Server is not in test mode");
+  });
 
 declare global {
   namespace Cypress {
