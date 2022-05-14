@@ -48,8 +48,8 @@ const CreateSetForm = ({
             errors.name = "Required";
           }
 
-          if (values.name.length < 1 || values.name.length > 100) {
-            errors.name = `Name must be between 1 - 100 characters. Currently: ${values.name.length} chars`;
+          if (values.name.length > 100) {
+            errors.name = `Name must be less than 100 characters. Currently: ${values.name.length} chars`;
           }
 
           if (values.description.length > 300) {
@@ -120,11 +120,11 @@ const CreateSetForm = ({
               {isSubmitted && (
                 <Alert severity="success">
                   Costume set {isEdit ? "updated!" : "created!"} Head on over to{" "}
-                  <Link component={RouterLink} to="/sets">
+                  <Link component={RouterLink} to="/sets" data-cy="CSF-sets-link">
                     Sets
                   </Link>{" "}
                   or{" "}
-                  <Link component={RouterLink} to="/profile">
+                  <Link component={RouterLink} to="/profile" data-cy="CSF-profile-link">
                     Profile
                   </Link>
                 </Alert>

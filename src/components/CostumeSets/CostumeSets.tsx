@@ -1,9 +1,11 @@
 import { useEffect, useState, useContext, SyntheticEvent } from "react";
+import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
 import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import { Link } from "react-router-dom";
+
 import costumeSetsService from "../../services/costumeSetsService";
 import { formatErrorAsString } from "../../services/helpersService";
 import {
@@ -17,7 +19,6 @@ import CSSearchForm from "./CSSearchForm";
 import { StateContext } from "../../state/state";
 import CostumeSetCard from "./CostumeSetCard";
 import { useTitle } from "../../hooks/useTitle";
-import { Typography } from "@mui/material";
 
 interface CostumeSetsProps {
   title: string;
@@ -120,6 +121,7 @@ const CostumeSets = ({ title, isProfile, isMySets }: CostumeSetsProps) => {
             variant="outlined"
             component={Link}
             to="/sets/create"
+            data-cy="sets-create-btn"
           >
             Create
           </Button>
