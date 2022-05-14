@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe("The Costume Sets page with 10 costumes", () => {
+describe("The Create Set page with 10 costumes", () => {
   before(() => {
     cy.request("POST", "/api/testing/resetCostumes");
     cy.seedNumCostumes(10);

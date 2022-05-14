@@ -57,6 +57,7 @@ const Header = () => {
               color="default"
               onChange={colorMode.toggleColorMode}
               checked={theme.palette.mode === ThemeEnum.light}
+              inputProps={{ "aria-label": "Theme Switch" }}
               data-cy="header-theme-switch"
             ></Switch>
             <LightModeIcon fontSize="small" htmlColor="yellow" />

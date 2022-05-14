@@ -37,7 +37,6 @@ const CSSearchForm = ({ handleSearch, loading }: CSSearchFormProps) => {
           value={name}
           onChange={handleChange}
           placeholder="Search Name"
-          disabled={loading}
           data-cy="cs-search-name"
           endAdornment={
             <InputAdornment position="end">

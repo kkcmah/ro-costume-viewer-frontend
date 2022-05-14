@@ -75,7 +75,9 @@ const CostumeSets = ({ title, isProfile, isMySets }: CostumeSetsProps) => {
 
   const handleSearch = (event: SyntheticEvent, name: string) => {
     event.preventDefault();
-    if (loading || prevSearchName === name) {
+    if (loading) {
+      return;
+    } else if (prevSearchName === name) {
       setSuccessMsg(`Already showing results for: ${name}`);
       return;
     } else if (!isErr) {
