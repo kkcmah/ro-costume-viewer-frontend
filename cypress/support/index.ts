@@ -17,7 +17,14 @@
 
 // Import commands.js using ES2015 syntax:
 import "./commands";
-import { EquipSlot, NewCostume, UserLoginCreds } from "../../src/types";
+import {
+  Costume,
+  CostumeSet,
+  EquipSlot,
+  NewCostume,
+  NewCostumeSet,
+  UserLoginCreds,
+} from "../../src/types";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
@@ -29,7 +36,7 @@ declare global {
        * Custom command to login
        * @example cy.login({username: "myuser", password: "mypass"})
        */
-      login(userLoginCreds: UserLoginCreds): Chainable<Element>;
+      login(userLoginCreds: UserLoginCreds): Chainable<string>;
       /**
        * Custom command to bypass the page refresh loading screen
        * @example cy.bypassLoading()
@@ -44,14 +51,28 @@ declare global {
        * previewUrl: "https://urlhere",
        * className: "costume costume-18740"})
        */
-      seedCostume(newCostume: NewCostume): Chainable<Element>;
+      seedCostume(newCostume: NewCostume): Chainable<Costume>;
       /**
        * Custom command to seed a specified number of random costumes.
        * itemIds start at 0.
        * name starts at cosname10 and goes up to cosname10+num ex. cosname10, cosname11, .... cosname29
        * @example cy.seedNumCostumes(30)
        */
-      seedNumCostumes(num: number): Chainable<Element>;
+      seedNumCostumes(num: number): Chainable<Costume[]>;
+      /**
+       * Custom command to seed a costume set.
+       * First seed a user, get token
+       * then seed some costumes then use costumes ids and token here.
+       * @example cy.seedCostume("usertoken" {
+       * name: "cossetname",
+       * description: "cossetdescription",
+       * isPublic: false,
+       * costumes: (mongodb costume ids) [absib3b2b3]
+       */
+      seedCostumeSet(
+        token: string,
+        newCostumeSet: NewCostumeSet
+      ): Chainable<CostumeSet>;
     }
   }
 }

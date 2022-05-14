@@ -6,6 +6,10 @@ describe("The Costume Sets page with 10 costumes", () => {
     cy.seedNumCostumes(10);
   });
 
+  after(() => {
+    cy.request("POST", "/api/testing/resetCostumeSets");
+  });
+
   it("as a non-logged in user displays appropriate message", () => {
     cy.visit("/sets/create");
     cy.bypassLoading();

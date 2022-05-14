@@ -158,6 +158,7 @@ const CostumeSets = ({ title, isProfile, isMySets }: CostumeSetsProps) => {
             variant="outlined"
             onClick={handleLoadMore}
             disabled={loading}
+            data-cy="CS-load-more-btn"
           >
             Load More
           </Button>

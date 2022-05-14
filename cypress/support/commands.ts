@@ -22,10 +22,10 @@
 //
 //
 // -- This will overwrite an existing command --
+// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 import { getRandomEquipSlot } from ".";
 
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 Cypress.Commands.add("bypassLoading", () => {
   cy.get("[data-cy=lets-go-btn]").click();
 });
@@ -36,6 +36,7 @@ Cypress.Commands.add("login", ({ username, password }) => {
     password,
   }).then((response) => {
     localStorage.setItem("user", response.body.token as string);
+    return cy.wrap(response.body.token);
   });
 });
 
@@ -46,6 +47,8 @@ Cypress.Commands.add(
       url: "/api/testing/seed/costume",
       method: "POST",
       body: { itemId, name, equipSlots, costumeTags, previewUrl, className },
+    }).then((res) => {
+      return cy.wrap(res.body);
     });
   }
 );
@@ -64,5 +67,25 @@ Cypress.Commands.add("seedNumCostumes", (num) => {
       className: `costume costume-${18740 + i}`,
     });
   }
-  cy.request("POST", "/api/testing/seed/manyCostumes", costumesToSeed);
+  cy.request("POST", "/api/testing/seed/manyCostumes", costumesToSeed).then(
+    (res) => {
+      return cy.wrap(res.body);
+    }
+  );
 });
+
+Cypress.Commands.add(
+  "seedCostumeSet",
+  (token, { name, description, isPublic, costumes }) => {
+    cy.request({
+      url: "/api/costumeSets",
+      method: "POST",
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+      body: { name, description, isPublic, costumes },
+    }).then((res) => {
+      return cy.wrap(res.body);
+    });
+  }
+);
