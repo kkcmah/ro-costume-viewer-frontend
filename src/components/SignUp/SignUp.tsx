@@ -41,7 +41,9 @@ const Login = ({ title }: LoginProps) => {
 
   return (
     <div className="signup-container">
-      <Typography variant="h3" mb={1}>Sign Up</Typography>
+      <Typography variant="h3" mb={1}>
+        Sign Up
+      </Typography>
       {!newAccCreated && (
         <Typography textAlign="center" mb={2}>
           Existing account?{" "}
@@ -79,8 +81,11 @@ const Login = ({ title }: LoginProps) => {
 
           if (!values.password) {
             errors.password = "Required";
-          } else if (values.password.length < 3) {
-            errors.password = "password must be longer than 3 characters";
+          } else if (
+            values.password.length < 3 ||
+            values.password.length > 50
+          ) {
+            errors.password = "password must be between 3 - 50 characters";
           }
 
           return errors;

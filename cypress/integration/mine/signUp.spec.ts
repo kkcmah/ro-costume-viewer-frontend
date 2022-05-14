@@ -41,13 +41,20 @@ describe("The Sign Up Page", () => {
       .type("Lorem ipsum dolor sit amet, consectetur porta ante.")
       .blur();
     cy.contains("username must be between 3 - 50 characters").should("exist");
+    cy.get("@signupBtn").should("be.disabled");
   });
 
   it("entering invalid passwords shows appropriate validation errors", () => {
     cy.get("@signupPasswordInput").find("div > input").focus().blur();
     cy.contains("Required").should("exist");
     cy.get("@signupPasswordInput").find("div > input").type("a").blur();
-    cy.contains("password must be longer than 3 characters").should("exist");
+    cy.contains("password must be between 3 - 50 characters").should("exist");
+    cy.get("@signupPasswordInput")
+      .find("div > input")
+      .type("Lorem ipsum dolor sit amet, consectetur massa nunc.")
+      .blur();
+    cy.contains("password must be between 3 - 50 characters").should("exist");
+    cy.get("@signupBtn").should("be.disabled");
   });
 
   it("clicking on login link goes to login page", () => {
