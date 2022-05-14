@@ -8,17 +8,19 @@ import Switch from "@mui/material/Switch";
 import Toolbar from "@mui/material/Toolbar";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
+import { useTheme } from "@mui/material";
 
 import { setUser } from "../../state/reducer";
 import { StateContext } from "../../state/state";
 import loginService from "../../services/loginService";
-import { ColorModeContext } from "../../MyTheme/MyTheme";
+import { ColorModeContext, ThemeEnum } from "../../MyTheme/MyTheme";
 
 const Header = () => {
   const [state, dispatch] = useContext(StateContext);
   const navigate = useNavigate();
 
   const colorMode = useContext(ColorModeContext);
+  const theme = useTheme();
 
   const handleLogout = () => {
     loginService.logout();
@@ -54,6 +56,7 @@ const Header = () => {
             <Switch
               color="default"
               onChange={colorMode.toggleColorMode}
+              checked={theme.palette.mode === ThemeEnum.light}
               data-cy="header-theme-switch"
             ></Switch>
             <LightModeIcon fontSize="small" htmlColor="yellow" />
