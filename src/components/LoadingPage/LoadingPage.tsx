@@ -105,7 +105,7 @@ const LoadingPage = ({ loading, handleLPDoneClick }: LoadingPageProps) => {
       angle += step;
 
       iconStylesAndClasses.push({
-        classes: `costume ${icon} item`,
+        classes: `costume costume-${icon} item`,
         style: { left: `${x}px`, top: `${y}px` },
       });
     }

@@ -1,0 +1,81 @@
+.tag-black {
+  background-color: black !important;
+  color: white !important;
+}
+
+.tag-blue {
+  background-color: blue !important;
+  color: white !important;
+}
+
+.tag-brown {
+  background-color: brown !important;
+  color: white !important;
+}
+
+.tag-gold {
+  background-color: gold !important;
+  color: black !important;
+}
+
+.tag-green {
+  background-color: green !important;
+  color: white !important;
+}
+
+.tag-grey {
+  background-color: grey !important;
+  color: white !important;
+}
+
+.tag-orange {
+  background-color: orange !important;
+  color: black !important;
+}
+
+.tag-pink {
+  background-color: pink !important;
+  color: black !important;
+}
+
+.tag-purple {
+  background-color: purple !important;
+  color: white !important;
+}
+
+.tag-rainbow {
+  background: linear-gradient(
+    30deg,
+    rgba(255, 0, 0, 1) 0%,
+    rgba(255, 154, 0, 1) 10%,
+    rgba(208, 222, 33, 1) 20%,
+    rgba(79, 220, 74, 1) 30%,
+    rgba(63, 218, 216, 1) 40%,
+    rgba(47, 201, 226, 1) 50%,
+    rgba(28, 127, 238, 1) 60%,
+    rgba(95, 21, 242, 1) 70%,
+    rgba(186, 12, 248, 1) 80%,
+    rgba(251, 7, 217, 1) 90%,
+    rgba(255, 0, 0, 1) 100%
+  ) !important;
+}
+
+.tag-red {
+  background-color: red !important;
+  color: white !important;
+}
+
+.tag-silver {
+  background-color: silver !important;
+  color: black !important;
+}
+
+.tag-white {
+  background-color: white !important;
+  color: black !important;
+}
+
+.tag-yellow {
+  background-color: yellow !important;
+  color: black !important;
+}

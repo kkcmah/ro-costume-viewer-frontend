@@ -2,6 +2,7 @@ import { ChangeEvent, useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
+import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Paper from "@mui/material/Paper";
@@ -123,7 +124,7 @@ const CostumesTable = ({
               <TableCell>Name</TableCell>
               <TableCell>id</TableCell>
               <TableCell>Slots</TableCell>
-              <TableCell>Tags</TableCell>
+              <TableCell align="center">Tags</TableCell>
               {/* empty table cell header for actions so that the divider is fullwidth */}
               {state.user && <TableCell></TableCell>}
             </TableRow>
@@ -146,7 +147,7 @@ const CostumesTable = ({
                           onChange={() => handleCosCheckChange(cos)}
                         />
                       )}
-                      <Box mr={1} className="costume costume-18740"></Box>
+                      <Box mr={1} className={cos.className}></Box>
                       <Typography mr={1}>{cos.name}</Typography>
                       {cos.previewUrl && (
                         <>
@@ -185,8 +186,16 @@ const CostumesTable = ({
                   </TableCell>
                   <TableCell>{cos.itemId}</TableCell>
                   <TableCell>{cos.equipSlots.join(" ")}</TableCell>
-                  <TableCell>
-                    {cos.costumeTags.map((tag) => tag.name).join(" ")}
+                  <TableCell align="center">
+                    {cos.costumeTags.map((tag) => (
+                      <Chip
+                        key={tag.id}
+                        label={tag.name}
+                        size="small"
+                        className={`tag-${tag.name.toLowerCase()}`}
+                        variant="outlined"
+                      />
+                    ))}
                   </TableCell>
                   {state.user && (
                     <TableCell>

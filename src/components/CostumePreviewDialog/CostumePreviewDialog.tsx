@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -57,14 +58,24 @@ const CostumePreviewDialog = ({
             >
               <Stack direction="row" alignItems="center">
                 <Typography>Icon:</Typography>
-                <Typography className="costume costume-18740"></Typography>
+                <Typography className={curCosPreview?.className}></Typography>
               </Stack>
 
               <Typography>Id: {curCosPreview?.itemId}</Typography>
-              <Typography>Slots: {curCosPreview?.equipSlots}</Typography>
               <Typography>
+                Slots: {curCosPreview?.equipSlots.join(" ")}
+              </Typography>
+              <Typography component="div">
                 Tags:{" "}
-                {curCosPreview?.costumeTags.map((tag) => tag.name).join(" ")}
+                {curCosPreview?.costumeTags.map((tag) => (
+                  <Chip
+                    key={tag.id}
+                    label={tag.name}
+                    size="small"
+                    className={`tag-${tag.name.toLowerCase()}`}
+                    variant="outlined"
+                  />
+                ))}
               </Typography>
             </Stack>
           </Grid>

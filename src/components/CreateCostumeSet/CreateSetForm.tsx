@@ -52,6 +52,10 @@ const CreateSetForm = ({
             errors.name = `Name must be less than 100 characters. Currently: ${values.name.length} chars`;
           }
 
+          if (!values.description) {
+            errors.description = "Required";
+          }
+
           if (values.description.length > 300) {
             errors.description = `Description must be less than 300 characters. Currently: ${values.description.length} chars`;
           }
@@ -83,6 +87,7 @@ const CreateSetForm = ({
               label="Description"
               minRows={3}
               multiline={true}
+              required={true}
               disabled={isSubmitted || disableButtons}
             />
             <MySwitch
@@ -120,11 +125,19 @@ const CreateSetForm = ({
               {isSubmitted && (
                 <Alert severity="success">
                   Costume set {isEdit ? "updated!" : "created!"} Head on over to{" "}
-                  <Link component={RouterLink} to="/sets" data-cy="CSF-sets-link">
+                  <Link
+                    component={RouterLink}
+                    to="/sets"
+                    data-cy="CSF-sets-link"
+                  >
                     Sets
                   </Link>{" "}
                   or{" "}
-                  <Link component={RouterLink} to="/profile" data-cy="CSF-profile-link">
+                  <Link
+                    component={RouterLink}
+                    to="/profile"
+                    data-cy="CSF-profile-link"
+                  >
                     Profile
                   </Link>
                 </Alert>

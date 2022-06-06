@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 
+import "./App.css";
 import { APP_TITLE } from "./constants";
 import usersService from "./services/usersService";
 import { StateContext } from "./state/state";

@@ -11,6 +11,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
+import Chip from "@mui/material/Chip";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Switch from "@mui/material/Switch";
 import Typography from "@mui/material/Typography";
@@ -43,7 +44,7 @@ const CSDCostumeCard = ({ costume }: CSDCostumeCardProps) => {
   return (
     <Card>
       <CardHeader
-        avatar={<Typography className="costume costume-18740"></Typography>}
+        avatar={<Typography className={costume.className}></Typography>}
         title={costume.name}
         subheader={`(itemId: ${costume.itemId})`}
       />
@@ -51,8 +52,17 @@ const CSDCostumeCard = ({ costume }: CSDCostumeCardProps) => {
         <Typography variant="body1">
           Slot(s): {costume.equipSlots.join(" ")}
         </Typography>
-        <Typography variant="body2">
-          Tags: {costume.costumeTags.map((tag) => tag.name).join(" ")}
+        <Typography variant="body2" component="div" my={1}>
+          Tags:{" "}
+          {costume.costumeTags.map((tag) => (
+            <Chip
+              key={tag.id}
+              label={tag.name}
+              size="small"
+              className={`tag-${tag.name.toLowerCase()}`}
+              variant="outlined"
+            />
+          ))}
         </Typography>
         {costume.previewUrl && (
           <Accordion onChange={handleAccordianOpen}>

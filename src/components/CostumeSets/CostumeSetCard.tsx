@@ -184,8 +184,7 @@ const CostumeSetCard = ({ costumeSet, isMySet }: CostumeSetCardProps) => {
               <Typography
                 m="auto"
                 component="div"
-                // TODO replace with cos.className later
-                className="costume costume-18740"
+                className={cos.className}
               ></Typography>
             </Grid>
           ))}

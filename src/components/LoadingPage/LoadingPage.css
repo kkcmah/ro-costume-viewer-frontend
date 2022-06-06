@@ -32,7 +32,7 @@
 .lp-btn {
   background-color: rgba(207, 216, 211, 0.75);
   height: 35px;
-  border-radius: 15%;
+  border-radius: 9px;
   border: 1px dotted yellow;
   z-index: 10;
 }

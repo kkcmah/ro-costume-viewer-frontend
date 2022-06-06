@@ -80,7 +80,7 @@ const CostumesToAddList = ({
                   }
                 >
                   <ListItemIcon>
-                    <Box className="costume costume-18740"></Box>
+                    <Box className={costume.className}></Box>
                   </ListItemIcon>
                   <ListItemText
                     primary={`${costume.name} (itemId: ${costume.itemId})`}
