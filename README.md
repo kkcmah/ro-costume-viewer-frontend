@@ -6,9 +6,7 @@ Additionally, it was made using [React](https://reactjs.org/), [MUI](https://mui
 
 The hosted version is here:
 
-TODO
-
-https://herokuapp.com
+https://ro-costume-viewer.herokuapp.com/
 
 Initial load times can be slow if the Heroku server needs to come out of slumber.
 
@@ -62,9 +60,13 @@ Opens Cypress for testing. Tests are located in cypress/integration/mine.
 
 This currently doesn't do anything. Jest and/or Cypress (from above) are the planned tools for this. Use `npm run cypress:open` for now.
 
-### `npm build`
+### `npm run build`
 
-Builds the app for production to the `build` folder. Delete the source mapping .map files. Throw the build folder into the backend project's root directory and it will be served statically via Express.
+Builds the app for production to the `build` folder.
+
+Set .env's GENERATE_SOURCEMAP depending on whether you want to do some debugging on the production build.
+
+Throw the build folder into the backend project's root directory and it will be served statically via Express.
 
 ## Roadmap
 

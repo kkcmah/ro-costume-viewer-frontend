@@ -6,6 +6,25 @@ describe("The Header", () => {
       cy.visit("/notexist");
       cy.bypassLoading();
     });
+
+    describe("nav menu icon appears for viewport of 500 x 800", () => {
+      beforeEach(() => {
+        cy.viewport(500, 800);
+      });
+
+      it("has a home item", () => {
+        cy.get("[data-cy=header-menu-btn-xs]").should("exist").click();
+        cy.get("[data-cy=header-menu-home-xs]").should("exist").click();
+        cy.url().should("include", "/");
+      });
+
+      it("has a sets item", () => {
+        cy.get("[data-cy=header-menu-btn-xs]").should("exist").click();
+        cy.get("[data-cy=header-menu-sets-xs]").should("exist").click();
+        cy.url().should("include", "/sets");
+      });
+    });
+
     it("has a home button", () => {
       cy.get("[data-cy=header-home-btn]").should("exist").click();
       cy.url().should("include", "/");
@@ -57,6 +76,24 @@ describe("The Header", () => {
       cy.login({ username: "user", password: "pass" });
       cy.visit("/notexist");
       cy.bypassLoading();
+    });
+
+    describe("nav menu icon appears for viewport of 500 x 800", () => {
+      beforeEach(() => {
+        cy.viewport(500, 800);
+      });
+
+      it("has a home item", () => {
+        cy.get("[data-cy=header-menu-btn-xs]").should("exist").click();
+        cy.get("[data-cy=header-menu-home-xs]").should("exist").click();
+        cy.url().should("include", "/");
+      });
+
+      it("has a sets item", () => {
+        cy.get("[data-cy=header-menu-btn-xs]").should("exist").click();
+        cy.get("[data-cy=header-menu-sets-xs]").should("exist").click();
+        cy.url().should("include", "/sets");
+      });
     });
 
     it("has a home button", () => {

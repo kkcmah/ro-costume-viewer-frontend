@@ -91,6 +91,7 @@ describe("The Create Set page with 10 costumes", () => {
 
     it("valid form and no costumes selected shows message to select costumes", () => {
       cy.get("#create-name-input").type("valid");
+      cy.get("#create-description-input").type("valid desc");
       cy.contains(
         "Select at least one costume from below to include in set"
       ).should("exist");
