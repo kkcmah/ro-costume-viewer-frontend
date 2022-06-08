@@ -123,6 +123,7 @@ const CostumeSets = ({ title, isProfile, isMySets }: CostumeSetsProps) => {
             variant="outlined"
             component={Link}
             to="/sets/create"
+            sx={{ mr: 1 }}
             data-cy="sets-create-btn"
           >
             Create

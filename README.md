@@ -66,7 +66,7 @@ Builds the app for production to the `build` folder.
 
 Set .env's GENERATE_SOURCEMAP depending on whether you want to do some debugging on the production build.
 
-Throw the build folder into the backend project's root directory and it will be served statically via Express.
+Throw the build folder into the backend project's root `client` directory (afterwards, it will look like `client/build`) and it will be served statically via Express.
 
 ## Roadmap
 

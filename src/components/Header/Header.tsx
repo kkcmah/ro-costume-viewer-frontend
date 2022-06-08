@@ -117,6 +117,7 @@ const Header = () => {
               checked={theme.palette.mode === ThemeEnum.light}
               inputProps={{ "aria-label": "Theme Switch" }}
               data-cy="header-theme-switch"
+              size="small"
             ></Switch>
             <LightModeIcon fontSize="small" htmlColor="yellow" />
           </Box>
