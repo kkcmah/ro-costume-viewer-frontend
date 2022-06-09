@@ -12,7 +12,7 @@ Initial load times can be slow if the Heroku server needs to come out of slumber
 
 The backend for this project can be found here:
 
-https://github.com
+https://github.com/kkcmah/ro-costume-viewer-backend
 
 ## Project Motivation
 
@@ -22,15 +22,17 @@ I wanted to create a way for people to preview different costumes and manage the
 
 ## Features
 
-TODO put demo video and put timestamps?
+https://user-images.githubusercontent.com/16821647/172755484-1d8d1e81-f52d-4ac5-be78-389e83401caa.mp4
 
-- User persistance via sign up and login
+
+- (0:04) User persistance via sign up and login
 - Previews are currently all using the base male Assassin Cross job model with a neutral pallete
-- Ability for users to view a list of costumes, preview those that have urls, and favorite them
-- Ability for users to like, create, view, update, and delete costume sets
-- Profile page to view own created sets, favorited costumes, and liked sets
-- Light and dark modes
-- Search and pagination on costume list and costume set lists
+- (0:21) Ability for users to view a list of costumes, preview those that have urls, and favorite them
+- (0:38) Search and pagination on costume list
+- (0:47) Ability for users to like, (1:14) create, view, (1:40) update, and (1:50) delete costume sets
+- (1:09) Search and (2:25) pagination on costume sets
+- (1:36) Profile page to view own created sets, (2:00) favorited costumes, and liked sets
+- (2:11) Light and dark modes
 
 ## Scripts
 
@@ -70,7 +72,7 @@ Throw the build folder into the backend project's root `client` directory (after
 
 ## Roadmap
 
-Ideally, I want to create a model viewer that allows users to select different genders, jobs, customize hair styles and color, customize clothing color, customize backgrounds, move, rotate, and superposition costumes on top of each other.
+Ideally, I want to create a model visualizer that allows users to select different genders, jobs, customize hair styles and color, customize clothing color, customize backgrounds, move, rotate, and superposition costumes on top of each other.
 
 This project is mainly used as a learning tool for myself to improve my React and web skills. The aforementioned features would be built using this as a foundation of some sorts.
 
