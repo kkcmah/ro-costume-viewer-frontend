@@ -19,10 +19,10 @@ const Footer = () => {
         without notice. © 2022. Project here:{" "}
         <Link
           rel="noopener noreferrer"
-          href="https://github.com/"
+          href="https://github.com/kkcmah/ro-costume-viewer-frontend"
           target="_blank"
         >
-          https://github.com/
+          https://github.com/kkcmah/ro-costume-viewer-frontend
         </Link>
       </Typography>
     </footer>
